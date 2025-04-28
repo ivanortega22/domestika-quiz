@@ -26,7 +26,8 @@
     }
     .door img {
       width: 200px;
-      transition: transform 0.5s ease;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      animation: pulse 2s infinite; /* Brillo pulsante */
     }
     .door:hover img {
       transform: scale(1.1);
@@ -37,6 +38,9 @@
     .shake {
       animation: shake 0.5s;
     }
+    .glitch {
+      animation: glitch 0.3s;
+    }
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
@@ -44,11 +48,45 @@
       75% { transform: translateX(-10px); }
       100% { transform: translateX(0); }
     }
+    @keyframes glitch {
+      0% { filter: contrast(1); }
+      50% { filter: contrast(2) hue-rotate(20deg); }
+      100% { filter: contrast(1); }
+    }
+    @keyframes pulse {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+      100% { filter: brightness(1); }
+    }
+    #questionText {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .show-question {
+      opacity: 1;
+    }
     .hidden {
       display: none;
     }
     .status {
       margin-top: 20px;
+    }
+    .flash-red {
+      animation: flashRed 0.5s;
+    }
+    @keyframes flashRed {
+      0%, 100% { color: #fff; }
+      50% { color: red; }
+    }
+    #finalMessage {
+      font-size: 1.5em;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .show-final {
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
@@ -130,7 +168,12 @@
     }
 
     function loadQuestion() {
-      document.getElementById('questionText').innerText = questions[current].text;
+      const questionText = document.getElementById('questionText');
+      questionText.classList.remove('show-question'); // Oculta antes
+      setTimeout(() => {
+        questionText.innerText = questions[current].text;
+        questionText.classList.add('show-question'); // Muestra con fade
+      }, 100);
       doors.forEach((door, index) => {
         door.querySelector('p').innerText = questions[current].options[index];
       });
@@ -140,7 +183,7 @@
       door.addEventListener('click', () => {
         const selected = parseInt(door.dataset.index);
         if (selected === questions[current].answer) {
-          document.getElementById('correctSound').play(); // Sonido correcto
+          document.getElementById('correctSound').play();
           door.classList.add('opened');
           const points = Math.max(100 - time * 2, 10);
           score += points;
@@ -155,15 +198,18 @@
             }
           }, 1000);
         } else {
-          document.getElementById('incorrectSound').play(); // Sonido incorrecto
-          door.classList.add('shake');
+          document.getElementById('incorrectSound').play();
+          door.classList.add('shake', 'glitch');
           lives--;
-          document.getElementById('lives').innerText = `Lives: ${lives}`;
+          const livesText = document.getElementById('lives');
+          livesText.innerText = `Lives: ${lives}`;
+          livesText.classList.add('flash-red'); // Vidas animadas
           if (lives <= 0) {
             endGame();
           }
           setTimeout(() => {
-            door.classList.remove('shake');
+            door.classList.remove('shake', 'glitch');
+            livesText.classList.remove('flash-red');
           }, 500);
         }
       });
@@ -172,11 +218,15 @@
     function endGame() {
       clearInterval(timerInterval);
       document.getElementById('gameArea').classList.add('hidden');
+      const finalMessage = document.getElementById('finalMessage');
       const message = lives > 0 ? 
         `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
         `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
-      document.getElementById('finalMessage').innerText = message;
-      document.getElementById('finalMessage').classList.remove('hidden');
+      finalMessage.innerText = message;
+      finalMessage.classList.remove('hidden');
+      setTimeout(() => {
+        finalMessage.classList.add('show-final'); // Animación final
+      }, 100);
     }
   </script>
 </body>
