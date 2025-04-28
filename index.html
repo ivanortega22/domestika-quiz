@@ -5,7 +5,7 @@
   <title>Cybersecurity Escape: Dungeon Mode</title>
   <style>
     body {
-      background: url('fondo-dungeon.jpg') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1604079628045-bb3bcf5b9c3e?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Inter', sans-serif;
       color: #fff;
@@ -48,34 +48,34 @@
   <h2 id="questionText">Which password is the strongest?</h2>
   <div class="doors">
     <div class="door" data-index="0">
-      <img src="puerta.png" alt="Door 1">
+      <img src="https://i.imgur.com/OZkQ1KT.png" alt="Door 1">
       <p>password123</p>
     </div>
     <div class="door" data-index="1">
-      <img src="puerta.png" alt="Door 2">
+      <img src="https://i.imgur.com/OZkQ1KT.png" alt="Door 2">
       <p>Verano2024</p>
     </div>
     <div class="door" data-index="2">
-      <img src="puerta.png" alt="Door 3">
+      <img src="https://i.imgur.com/OZkQ1KT.png" alt="Door 3">
       <p>T&g9$Lp!2z</p>
     </div>
   </div>
 
   <script>
     const doors = document.querySelectorAll('.door');
-    const correctAnswer = 2; // Respuesta correcta (puerta 3)
+    const correctAnswer = 2;
 
     doors.forEach(door => {
       door.addEventListener('click', () => {
         const selected = parseInt(door.dataset.index);
         if (selected === correctAnswer) {
-          door.classList.add('opened'); // Abre la puerta correcta
+          door.classList.add('opened');
           setTimeout(() => {
             alert('✅ Correct! Moving to next question...');
-            // Aquí cargarías la siguiente pregunta
+            // Aquí iría la siguiente pregunta
           }, 1000);
         } else {
-          door.classList.add('shake'); // Tiembla si es incorrecta
+          door.classList.add('shake');
           setTimeout(() => {
             door.classList.remove('shake');
           }, 500);
