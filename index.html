@@ -79,11 +79,15 @@
       50% { color: red; }
     }
     #finalMessage {
-      font-size: 1.5em;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+  font-size: 2em;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  text-align: center;
+  color: #fff; /* Asegura que se vea */
+  margin: 20px auto;
+  max-width: 80%;
+}
     .show-final {
       opacity: 1;
       transform: scale(1);
@@ -229,16 +233,18 @@ doors.forEach(door => {
   clearInterval(timerInterval);
   document.getElementById('gameArea').classList.add('hidden');
   const finalMessage = document.getElementById('finalMessage');
+  finalMessage.classList.remove('hidden'); // Asegúrate de mostrarlo
   const message = lives > 0 ? 
     `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
     `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
   finalMessage.innerText = message;
-  finalMessage.classList.remove('hidden');
+
+  // Aplícale la animación (por si no se aplicó antes)
   setTimeout(() => {
     finalMessage.classList.add('show-final');
-  }, 100);
+  }, 50);
 
-  isProcessing = false; // 🔥 Añade esto aquí
+  isProcessing = false; // Libera clics
 }
   </script>
 </body>
