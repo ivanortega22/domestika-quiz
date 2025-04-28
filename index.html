@@ -5,40 +5,43 @@
   <title>Cybersecurity Escape: Dungeon Mode</title>
   <style>
     body {
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Capa oscura encima */
-    url('https://images.unsplash.com/photo-1604079628045-bb3bcf5b9c3e?auto=format&fit=crop&w=1500&q=80') 
-    no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Inter', sans-serif;
-  color: #fff;
-  text-align: center;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+        url('https://images.unsplash.com/photo-1617692855028-4b849e6e90db?auto=format&fit=crop&w=1500&q=80') 
+        no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-.doors {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-}
+    .doors {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+    }
 
-.door img {
-  width: 200px; /* Tamaño más grande */
-  transition: transform 0.5s ease;
-}
+    .door img {
+      width: 200px;
+      transition: transform 0.5s ease;
+    }
 
-.door:hover img {
-  transform: scale(1.1);
-}
+    .door:hover img {
+      transform: scale(1.1);
+    }
+
     .opened img {
       transform: rotateY(90deg);
     }
+
     .shake {
       animation: shake 0.5s;
     }
+
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
@@ -50,34 +53,60 @@
 </head>
 <body>
   <h1>Cybersecurity Escape: Choose the Right Door</h1>
-  <h2 id="questionText">Which password is the strongest?</h2>
+  <h2 id="questionText"></h2>
   <div class="doors">
     <div class="door" data-index="0">
       <img src="assets/puerta.png" alt="Door 1">
-      <p>password123</p>
+      <p></p>
     </div>
     <div class="door" data-index="1">
-      <img src="assets/puerta.png" alt="Door 1">
-      <p>Verano2024</p>
+      <img src="assets/puerta.png" alt="Door 2">
+      <p></p>
     </div>
     <div class="door" data-index="2">
-      <img src="assets/puerta.png" alt="Door 1">
-      <p>T&g9$Lp!2z</p>
+      <img src="assets/puerta.png" alt="Door 3">
+      <p></p>
     </div>
   </div>
 
   <script>
+    const questions = [
+      { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
+      { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
+      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 },
+      { text: "What should you check before clicking a link?", options: ["If it looks familiar", "If the URL is correct", "If it's urgent"], answer: 1 },
+      { text: "What is phishing?", options: ["A type of firewall", "A fraudulent attempt to obtain sensitive info", "A safe email campaign"], answer: 1 },
+      { text: "Which of these is a secure website?", options: ["http://mybank.com", "https://mybank.com", "www.mybank.com"], answer: 1 },
+      { text: "How often should you update your password?", options: ["Never", "Once a year", "Every 3-6 months"], answer: 2 },
+      { text: "What is two-factor authentication?", options: ["A password twice", "A second layer of security", "A backup email"], answer: 1 },
+      { text: "What should you do if you receive a suspicious attachment?", options: ["Open it carefully", "Scan with antivirus", "Forward to IT"], answer: 2 },
+      { text: "Which is a secure practice?", options: ["Using the same password", "Writing down passwords", "Using a password manager"], answer: 2 }
+    ];
+
     const doors = document.querySelectorAll('.door');
-    const correctAnswer = 2;
+    let current = 0;
+
+    function loadQuestion() {
+      document.getElementById('questionText').innerText = questions[current].text;
+      doors.forEach((door, index) => {
+        door.querySelector('p').innerText = questions[current].options[index];
+      });
+    }
 
     doors.forEach(door => {
       door.addEventListener('click', () => {
         const selected = parseInt(door.dataset.index);
-        if (selected === correctAnswer) {
+        if (selected === questions[current].answer) {
           door.classList.add('opened');
           setTimeout(() => {
-            alert('✅ Correct! Moving to next question...');
-            // Aquí iría la siguiente pregunta
+            door.classList.remove('opened');
+            current++;
+            if (current < questions.length) {
+              loadQuestion();
+            } else {
+              document.getElementById('questionText').innerText = '🎉 Quiz Completed!';
+              doors.forEach(d => d.style.display = 'none');
+            }
           }, 1000);
         } else {
           door.classList.add('shake');
@@ -87,6 +116,8 @@
         }
       });
     });
+
+    loadQuestion();
   </script>
 </body>
 </html>
