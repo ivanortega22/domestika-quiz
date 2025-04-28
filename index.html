@@ -5,43 +5,38 @@
   <title>Cybersecurity Escape: Dungeon Mode</title>
   <style>
     body {
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('assets/fondo-dungeon.png') 
-    no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Inter', sans-serif;
-  color: #fff;
-  text-align: center;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('assets/fondo-dungeon.png') 
+        no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .doors {
       display: flex;
       justify-content: center;
       gap: 60px;
+      margin-top: 20px;
     }
-
     .door img {
       width: 200px;
       transition: transform 0.5s ease;
     }
-
     .door:hover img {
       transform: scale(1.1);
     }
-
     .opened img {
       transform: rotateY(90deg);
     }
-
     .shake {
       animation: shake 0.5s;
     }
-
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
@@ -49,25 +44,50 @@
       75% { transform: translateX(-10px); }
       100% { transform: translateX(0); }
     }
+    .hidden {
+      display: none;
+    }
+    .status {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>Cybersecurity Escape: Choose the Right Door</h1>
-  <h2 id="questionText"></h2>
-  <div class="doors">
-    <div class="door" data-index="0">
-      <img src="assets/puerta.png" alt="Door 1">
-      <p></p>
+  <!-- Pantalla de inicio -->
+  <div id="startScreen">
+    <h1>Cybersecurity Escape: Dungeon Mode</h1>
+    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;"><br>
+    <button onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
+      🚀 Start Quiz
+    </button>
+  </div>
+
+  <!-- Juego -->
+  <div id="gameArea" class="hidden">
+    <h2 id="questionText"></h2>
+    <div class="doors">
+      <div class="door" data-index="0">
+        <img src="assets/puerta.png" alt="Door 1">
+        <p></p>
+      </div>
+      <div class="door" data-index="1">
+        <img src="assets/puerta.png" alt="Door 2">
+        <p></p>
+      </div>
+      <div class="door" data-index="2">
+        <img src="assets/puerta.png" alt="Door 3">
+        <p></p>
+      </div>
     </div>
-    <div class="door" data-index="1">
-      <img src="assets/puerta.png" alt="Door 2">
-      <p></p>
-    </div>
-    <div class="door" data-index="2">
-      <img src="assets/puerta.png" alt="Door 3">
-      <p></p>
+    <div class="status">
+      <p id="timer">Time: 0s</p>
+      <p id="score">Score: 0</p>
+      <p id="lives">Lives: 3</p>
     </div>
   </div>
+
+  <!-- Final -->
+  <div id="finalMessage" class="hidden"></div>
 
   <script>
     const questions = [
@@ -85,6 +105,25 @@
 
     const doors = document.querySelectorAll('.door');
     let current = 0;
+    let time = 0;
+    let score = 0;
+    let lives = 3;
+    let timerInterval;
+
+    function startGame() {
+      const email = document.getElementById('email').value;
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email.');
+        return;
+      }
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameArea').classList.remove('hidden');
+      loadQuestion();
+      timerInterval = setInterval(() => {
+        time++;
+        document.getElementById('timer').innerText = `Time: ${time}s`;
+      }, 1000);
+    }
 
     function loadQuestion() {
       document.getElementById('questionText').innerText = questions[current].text;
@@ -98,18 +137,25 @@
         const selected = parseInt(door.dataset.index);
         if (selected === questions[current].answer) {
           door.classList.add('opened');
+          const points = Math.max(100 - time * 2, 10);
+          score += points;
+          document.getElementById('score').innerText = `Score: ${score}`;
           setTimeout(() => {
             door.classList.remove('opened');
             current++;
             if (current < questions.length) {
               loadQuestion();
             } else {
-              document.getElementById('questionText').innerText = '🎉 Quiz Completed!';
-              doors.forEach(d => d.style.display = 'none');
+              endGame();
             }
           }, 1000);
         } else {
           door.classList.add('shake');
+          lives--;
+          document.getElementById('lives').innerText = `Lives: ${lives}`;
+          if (lives <= 0) {
+            endGame();
+          }
           setTimeout(() => {
             door.classList.remove('shake');
           }, 500);
@@ -117,7 +163,15 @@
       });
     });
 
-    loadQuestion();
+    function endGame() {
+      clearInterval(timerInterval);
+      document.getElementById('gameArea').classList.add('hidden');
+      const message = lives > 0 ? 
+        `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
+        `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+      document.getElementById('finalMessage').innerText = message;
+      document.getElementById('finalMessage').classList.remove('hidden');
+    }
   </script>
 </body>
 </html>
