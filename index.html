@@ -89,6 +89,10 @@
   <!-- Final -->
   <div id="finalMessage" class="hidden"></div>
 
+  <!-- Sonidos -->
+  <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+  <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
   <script>
     const questions = [
       { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
@@ -136,6 +140,7 @@
       door.addEventListener('click', () => {
         const selected = parseInt(door.dataset.index);
         if (selected === questions[current].answer) {
+          document.getElementById('correctSound').play(); // Sonido correcto
           door.classList.add('opened');
           const points = Math.max(100 - time * 2, 10);
           score += points;
@@ -150,6 +155,7 @@
             }
           }, 1000);
         } else {
+          document.getElementById('incorrectSound').play(); // Sonido incorrecto
           door.classList.add('shake');
           lives--;
           document.getElementById('lives').innerText = `Lives: ${lives}`;
