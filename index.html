@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cybersecurity Escape: Dungeon Mode</title>
+  <style>
+    body {
+      background: url('fondo-dungeon.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+    .doors {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .door {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .door img {
+      width: 150px;
+      transition: transform 0.5s ease;
+    }
+    .door:hover img {
+      transform: scale(1.1);
+    }
+    .opened img {
+      transform: rotateY(90deg);
+    }
+    .shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Cybersecurity Escape: Choose the Right Door</h1>
+  <h2 id="questionText">Which password is the strongest?</h2>
+  <div class="doors">
+    <div class="door" data-index="0">
+      <img src="puerta.png" alt="Door 1">
+      <p>password123</p>
+    </div>
+    <div class="door" data-index="1">
+      <img src="puerta.png" alt="Door 2">
+      <p>Verano2024</p>
+    </div>
+    <div class="door" data-index="2">
+      <img src="puerta.png" alt="Door 3">
+      <p>T&g9$Lp!2z</p>
+    </div>
+  </div>
+
+  <script>
+    const doors = document.querySelectorAll('.door');
+    const correctAnswer = 2; // Respuesta correcta (puerta 3)
+
+    doors.forEach(door => {
+      door.addEventListener('click', () => {
+        const selected = parseInt(door.dataset.index);
+        if (selected === correctAnswer) {
+          door.classList.add('opened'); // Abre la puerta correcta
+          setTimeout(() => {
+            alert('✅ Correct! Moving to next question...');
+            // Aquí cargarías la siguiente pregunta
+          }, 1000);
+        } else {
+          door.classList.add('shake'); // Tiembla si es incorrecta
+          setTimeout(() => {
+            door.classList.remove('shake');
+          }, 500);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
