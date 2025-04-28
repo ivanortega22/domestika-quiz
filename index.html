@@ -226,18 +226,20 @@ doors.forEach(door => {
 });
 
     function endGame() {
-      clearInterval(timerInterval);
-      document.getElementById('gameArea').classList.add('hidden');
-      const finalMessage = document.getElementById('finalMessage');
-      const message = lives > 0 ? 
-        `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
-        `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
-      finalMessage.innerText = message;
-      finalMessage.classList.remove('hidden');
-      setTimeout(() => {
-        finalMessage.classList.add('show-final'); // Animación final
-      }, 100);
-    }
+  clearInterval(timerInterval);
+  document.getElementById('gameArea').classList.add('hidden');
+  const finalMessage = document.getElementById('finalMessage');
+  const message = lives > 0 ? 
+    `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
+    `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+  finalMessage.innerText = message;
+  finalMessage.classList.remove('hidden');
+  setTimeout(() => {
+    finalMessage.classList.add('show-final');
+  }, 100);
+
+  isProcessing = false; // 🔥 Añade esto aquí
+}
   </script>
 </body>
 </html>
