@@ -14,7 +14,6 @@
       color: #fff;
       text-align: center;
       height: 100vh;
-      margin: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -28,7 +27,7 @@
     .door img {
       width: 200px;
       transition: transform 0.5s ease, filter 0.5s ease;
-      animation: pulse 2s infinite;
+      animation: pulse 2s infinite; /* Brillo pulsante */
     }
     .door:hover img {
       transform: scale(1.1);
@@ -40,7 +39,7 @@
       animation: shake 0.5s;
     }
     .glitch {
-      animation: glitch 0.6s;
+      animation: glitch 0.3s;
     }
     @keyframes shake {
       0% { transform: translateX(0); }
@@ -50,12 +49,9 @@
       100% { transform: translateX(0); }
     }
     @keyframes glitch {
-      0% { filter: none; }
-      20% { filter: hue-rotate(45deg) blur(1px); transform: scale(1.05) rotate(2deg); }
-      40% { filter: hue-rotate(-45deg) blur(2px); transform: scale(0.95) rotate(-2deg); }
-      60% { filter: hue-rotate(20deg) blur(1px); }
-      80% { filter: none; transform: scale(1); }
-      100% { filter: none; }
+      0% { filter: contrast(1); }
+      50% { filter: contrast(2) hue-rotate(20deg); }
+      100% { filter: contrast(1); }
     }
     @keyframes pulse {
       0% { filter: brightness(1); }
@@ -83,16 +79,14 @@
       50% { color: red; }
     }
     #finalMessage {
-      font-size: 2em;
+      font-size: 1.5em;
       opacity: 0;
       transform: scale(0.8);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      text-align: center;
-      margin-top: 20px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .show-final {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1);
     }
   </style>
 </head>
@@ -138,10 +132,17 @@
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <script>
-    const questions = [ /* Tus preguntas aquí como antes */ 
+    const questions = [
       { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
       { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
-      // ... resto de preguntas ...
+      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 },
+      { text: "What should you check before clicking a link?", options: ["If it looks familiar", "If the URL is correct", "If it's urgent"], answer: 1 },
+      { text: "What is phishing?", options: ["A type of firewall", "A fraudulent attempt to obtain sensitive info", "A safe email campaign"], answer: 1 },
+      { text: "Which of these is a secure website?", options: ["http://mybank.com", "https://mybank.com", "www.mybank.com"], answer: 1 },
+      { text: "How often should you update your password?", options: ["Never", "Once a year", "Every 3-6 months"], answer: 2 },
+      { text: "What is two-factor authentication?", options: ["A password twice", "A second layer of security", "A backup email"], answer: 1 },
+      { text: "What should you do if you receive a suspicious attachment?", options: ["Open it carefully", "Scan with antivirus", "Forward to IT"], answer: 2 },
+      { text: "Which is a secure practice?", options: ["Using the same password", "Writing down passwords", "Using a password manager"], answer: 2 }
     ];
 
     const doors = document.querySelectorAll('.door');
@@ -168,10 +169,10 @@
 
     function loadQuestion() {
       const questionText = document.getElementById('questionText');
-      questionText.classList.remove('show-question');
+      questionText.classList.remove('show-question'); // Oculta antes
       setTimeout(() => {
         questionText.innerText = questions[current].text;
-        questionText.classList.add('show-question');
+        questionText.classList.add('show-question'); // Muestra con fade
       }, 100);
       doors.forEach((door, index) => {
         door.querySelector('p').innerText = questions[current].options[index];
@@ -202,14 +203,14 @@
           lives--;
           const livesText = document.getElementById('lives');
           livesText.innerText = `Lives: ${lives}`;
-          livesText.classList.add('flash-red');
+          livesText.classList.add('flash-red'); // Vidas animadas
           if (lives <= 0) {
             endGame();
           }
           setTimeout(() => {
             door.classList.remove('shake', 'glitch');
             livesText.classList.remove('flash-red');
-          }, 600);
+          }, 500);
         }
       });
     });
@@ -224,7 +225,7 @@
       finalMessage.innerText = message;
       finalMessage.classList.remove('hidden');
       setTimeout(() => {
-        finalMessage.classList.add('show-final');
+        finalMessage.classList.add('show-final'); // Animación final
       }, 100);
     }
   </script>
