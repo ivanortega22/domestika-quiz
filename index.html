@@ -179,41 +179,51 @@
       });
     }
 
-    doors.forEach(door => {
-      door.addEventListener('click', () => {
-        const selected = parseInt(door.dataset.index);
-        if (selected === questions[current].answer) {
-          document.getElementById('correctSound').play();
-          door.classList.add('opened');
-          const points = Math.max(100 - time * 2, 10);
-          score += points;
-          document.getElementById('score').innerText = `Score: ${score}`;
-          setTimeout(() => {
-            door.classList.remove('opened');
-            current++;
-            if (current < questions.length) {
-              loadQuestion();
-            } else {
-              endGame();
-            }
-          }, 1000);
+    let isProcessing = false; // Añade esta línea arriba de todo
+
+doors.forEach(door => {
+  door.addEventListener('click', () => {
+    if (isProcessing) return; // Bloquea si ya está procesando
+    isProcessing = true;
+
+    const selected = parseInt(door.dataset.index);
+    if (selected === questions[current].answer) {
+      document.getElementById('correctSound').play();
+      door.classList.add('opened');
+      const points = Math.max(100 - time * 2, 10);
+      score += points;
+      document.getElementById('score').innerText = `Score: ${score}`;
+      setTimeout(() => {
+        door.classList.remove('opened');
+        current++;
+        if (current < questions.length) {
+          loadQuestion();
+          isProcessing = false; // Libera clic después de cargar pregunta
         } else {
-          document.getElementById('incorrectSound').play();
-          door.classList.add('shake', 'glitch');
-          lives--;
-          const livesText = document.getElementById('lives');
-          livesText.innerText = `Lives: ${lives}`;
-          livesText.classList.add('flash-red'); // Vidas animadas
-          if (lives <= 0) {
-            endGame();
-          }
-          setTimeout(() => {
-            door.classList.remove('shake', 'glitch');
-            livesText.classList.remove('flash-red');
-          }, 500);
+          endGame(); // No hace falta liberar aquí
         }
-      });
-    });
+      }, 1000);
+    } else {
+      document.getElementById('incorrectSound').play();
+      door.classList.add('shake', 'glitch');
+      lives--;
+      const livesText = document.getElementById('lives');
+      livesText.innerText = `Lives: ${lives}`;
+      livesText.classList.add('flash-red');
+      if (lives <= 0) {
+        setTimeout(() => {
+          endGame(); // No libera clic, termina el juego
+        }, 500);
+      } else {
+        setTimeout(() => {
+          door.classList.remove('shake', 'glitch');
+          livesText.classList.remove('flash-red');
+          isProcessing = false; // Libera clic después del error
+        }, 500);
+      }
+    }
+  });
+});
 
     function endGame() {
       clearInterval(timerInterval);
