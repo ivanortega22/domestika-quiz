@@ -174,40 +174,41 @@
 }
 
     function checkAnswer(index) {
-      const correctSound = document.getElementById('correctSound');
-      const incorrectSound = document.getElementById('incorrectSound');
-      const container = document.getElementById('questions');
+  const correctSound = document.getElementById('correctSound');
+  const incorrectSound = document.getElementById('incorrectSound');
 
-      if (index === questions[current].answer) {
-        correctSound.play();
-        const points = Math.max(100 - time * 2, 10);
-        score += points;
-        document.getElementById('score').innerText = `Score: ${score}`;
-        container.innerHTML += '<p class="correct">✅ Correct!</p>';
-        current++;
-        if (current < questions.length) {
-          setTimeout(loadQuestion, 1000);
-        } else {
-          clearInterval(timerInterval);
-          container.innerHTML = '';
-          document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
-          sendData();
-        }
-      } else {
-        incorrectSound.play();
-        lives--;
-        document.getElementById('lives').innerText = `Lives: ${lives}`;
-        container.innerHTML += '<p class="incorrect">❌ Incorrect! Try again.</p>';
-        if (lives <= 0) {
-          clearInterval(timerInterval);
-          container.innerHTML = '';
-          document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
-          sendData(); // <-- Esta línea envía los datos también cuando pierdes
-        } else {
-          setTimeout(loadQuestion, 1000);
-        }
-      }
+  if (index === questions[current].answer) {
+    correctSound.play();
+    const points = Math.max(100 - time * 2, 10);
+    score += points;
+    document.getElementById('score').innerText = `Score: ${score}`;
+    document.getElementById('questionText').innerText = '✅ Correct!';
+    current++;
+    if (current < questions.length) {
+      setTimeout(loadQuestion, 1000);
+    } else {
+      clearInterval(timerInterval);
+      document.getElementById('gameScreen').classList.add('hidden');
+      document.getElementById('finalBox').classList.remove('hidden');
+      document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
+      sendData();
     }
+  } else {
+    incorrectSound.play();
+    lives--;
+    document.getElementById('lives').innerText = `Lives: ${lives}`;
+    document.getElementById('questionText').innerText = '❌ Incorrect! Try again.';
+    if (lives <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('gameScreen').classList.add('hidden');
+      document.getElementById('finalBox').classList.remove('hidden');
+      document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
+      sendData();
+    } else {
+      setTimeout(loadQuestion, 1000);
+    }
+  }
+}
 
     function sendData() {
       const email = document.getElementById('email').value;
