@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cybersecurity Escape: Dungeon Mode</title>
+  <title>Cybersecurity Escape</title>
   <style>
     body {
-      background:
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('assets/fondo-dungeon.png')
-        no-repeat center center fixed;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('assets/fondo-dungeon.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Inter', sans-serif;
       color: #fff;
-      text-align: center;
       margin: 0;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .screen {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      text-align: center;
     }
 
     .doors {
@@ -30,7 +37,7 @@
 
     .door img {
       width: 200px;
-      transition: transform 0.5s ease, filter 0.5s ease;
+      transition: transform 0.5s ease;
       animation: pulse 2s infinite;
       cursor: pointer;
     }
@@ -39,30 +46,8 @@
       transform: scale(1.1);
     }
 
-    .opened img {
-      transform: rotateY(90deg);
-    }
-
-    .shake {
-      animation: shake 0.5s;
-    }
-
-    .glitch {
-      animation: glitch 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      50% { transform: translateX(10px); }
-      75% { transform: translateX(-10px); }
-      100% { transform: translateX(0); }
-    }
-
-    @keyframes glitch {
-      0% { filter: contrast(1); }
-      50% { filter: contrast(2) hue-rotate(20deg); }
-      100% { filter: contrast(1); }
+    .status {
+      margin-top: 20px;
     }
 
     @keyframes pulse {
@@ -71,75 +56,53 @@
       100% { filter: brightness(1); }
     }
 
-    @keyframes fadeZoomIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.9) translate(-50%, -50%);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translate(-50%, -50%);
-      }
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    #startScreen,
-    #gameArea {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .status {
-      margin-top: 20px;
-    }
-
-    #finalContainer,
-    #questionContainer {
+    #questionBox, #finalBox {
       background: rgba(0, 0, 0, 0.7);
-      padding: 40px;
+      padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
       max-width: 600px;
-      width: 90%;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      margin-bottom: 30px;
       animation: fadeZoomIn 0.5s ease;
     }
 
-    #finalMessage,
-    #questionMessage {
+    @keyframes fadeZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1, h2 {
+      text-shadow: 0 0 10px rgba(255,255,255,0.9);
+    }
+
+    #questionText, #finalMessage {
       font-size: 2em;
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
   </style>
 </head>
 <body>
-  <div id="startScreen">
+  <!-- Pantalla de inicio -->
+  <div id="startScreen" class="screen">
     <h1>Cybersecurity Escape: Dungeon Mode</h1>
-    <input type="email" id="email" placeholder="Enter your email"
-           style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;">
+    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;">
     <br>
-    <button onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
+    <button onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b, #ff416c); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
       🚀 Start Quiz
     </button>
   </div>
 
-  <div id="gameArea" class="hidden">
+  <!-- Pantalla del juego -->
+  <div id="gameScreen" class="screen hidden">
+    <div id="questionBox">
+      <div id="questionText">Loading...</div>
+    </div>
+
     <div class="doors">
       <div class="door" data-index="0">
         <img src="assets/folder.png" alt="Door 1">
@@ -154,6 +117,7 @@
         <p></p>
       </div>
     </div>
+
     <div class="status">
       <p id="timer">Time: 0s</p>
       <p id="score">Score: 0</p>
@@ -161,14 +125,12 @@
     </div>
   </div>
 
-  <div id="questionContainer" class="hidden">
-    <div id="questionMessage">Loading question...</div>
-  </div>
-
-  <div id="finalContainer" class="hidden">
+  <!-- Pantalla final -->
+  <div id="finalBox" class="screen hidden">
     <div id="finalMessage"></div>
   </div>
 
+  <!-- Sonidos -->
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
@@ -179,22 +141,18 @@
       { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 }
     ];
 
-    let current = 0, score = 0, time = 0, lives = 3, timerInterval;
-    const doors = document.querySelectorAll('.door');
+    let current = 0, score = 0, time = 0, lives = 3, timer;
 
     function startGame() {
       const email = document.getElementById('email').value;
-      if (!email.includes('@')) {
-        alert('Please enter a valid email.');
-        return;
-      }
+      if (!email.includes('@')) return alert("Please enter a valid email.");
 
       document.getElementById('startScreen').classList.add('hidden');
-      document.getElementById('gameArea').classList.remove('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
 
       loadQuestion();
 
-      timerInterval = setInterval(() => {
+      timer = setInterval(() => {
         time++;
         document.getElementById('timer').innerText = `Time: ${time}s`;
       }, 1000);
@@ -202,31 +160,23 @@
 
     function loadQuestion() {
       const q = questions[current];
-      document.getElementById('questionMessage').innerText = q.text;
-      document.getElementById('questionContainer').classList.remove('hidden');
-
-      doors.forEach((door, i) => {
+      document.getElementById('questionText').innerText = q.text;
+      document.querySelectorAll('.door').forEach((door, i) => {
         door.querySelector('p').innerText = q.options[i];
       });
     }
 
-    doors.forEach(door => {
+    document.querySelectorAll('.door').forEach(door => {
       door.addEventListener('click', () => {
-        if (current >= questions.length) return;
-
         const selected = parseInt(door.dataset.index);
         const correct = questions[current].answer;
 
-        document.getElementById('questionContainer').classList.add('hidden');
-
         if (selected === correct) {
           document.getElementById('correctSound').play();
-          door.classList.add('opened');
           score += Math.max(100 - time * 2, 10);
           document.getElementById('score').innerText = `Score: ${score}`;
         } else {
           document.getElementById('incorrectSound').play();
-          door.classList.add('shake', 'glitch');
           lives--;
           document.getElementById('lives').innerText = `Lives: ${lives}`;
           if (lives <= 0) return endGame();
@@ -234,24 +184,21 @@
 
         current++;
         if (current < questions.length) {
-          setTimeout(() => {
-            doors.forEach(d => d.classList.remove('opened', 'shake', 'glitch'));
-            loadQuestion();
-          }, 1000);
+          loadQuestion();
         } else {
-          setTimeout(endGame, 1000);
+          endGame();
         }
       });
     });
 
     function endGame() {
-      clearInterval(timerInterval);
-      document.getElementById('gameArea').classList.add('hidden');
-      const msg = lives > 0
-        ? `🎉 Completed! Final Score: ${score}, Time: ${time}s`
-        : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
-      document.getElementById('finalMessage').innerText = msg;
-      document.getElementById('finalContainer').classList.remove('hidden');
+      clearInterval(timer);
+      document.getElementById('gameScreen').classList.add('hidden');
+      document.getElementById('finalBox').classList.remove('hidden');
+      document.getElementById('finalMessage').innerText =
+        lives > 0
+          ? `🎉 Completed! Final Score: ${score}, Time: ${time}s`
+          : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
     }
   </script>
 </body>
