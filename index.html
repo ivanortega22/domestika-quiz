@@ -76,7 +76,13 @@
       opacity: 1;
     }
     #startScreen,
-    #gameArea,
+#gameArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Asegura altura completa */
+}
     #finalContainer {
       display: flex;
       flex-direction: column;
