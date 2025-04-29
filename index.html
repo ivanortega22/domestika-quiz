@@ -95,12 +95,6 @@
   align-items: center;
 }
 
-#finalBox.show {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
   </style>
 </head>
 <body>
@@ -208,7 +202,9 @@
     } else {
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
-      document.getElementById('finalBox').classList.remove('hidden');
+const finalBox = document.getElementById('finalBox');
+finalBox.classList.remove('hidden');
+finalBox.style.display = 'flex'; // fuerza el display correcto por si acaso
       document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
       sendData();
       gameOver = true;
@@ -221,7 +217,9 @@
     if (lives <= 0) {
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
-      document.getElementById('finalBox').classList.remove('hidden');
+const finalBox = document.getElementById('finalBox');
+finalBox.classList.remove('hidden');
+finalBox.style.display = 'flex'; // fuerza el display correcto por si acaso
       document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
       sendData();
       gameOver = true;
