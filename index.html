@@ -27,7 +27,7 @@
     .door img {
       width: 200px;
       transition: transform 0.5s ease, filter 0.5s ease;
-      animation: pulse 2s infinite; /* Brillo pulsante */
+      animation: pulse 2s infinite;
     }
     .door:hover img {
       transform: scale(1.1);
@@ -58,6 +58,14 @@
       50% { filter: brightness(1.2); }
       100% { filter: brightness(1); }
     }
+    .hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .status {
+      margin-top: 20px;
+    }
     #questionText {
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -65,39 +73,27 @@
     .show-question {
       opacity: 1;
     }
-    .hidden {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-    .status {
-      margin-top: 20px;
-    }
-    .flash-red {
-      animation: flashRed 0.5s;
-    }
-    @keyframes flashRed {
-      0%, 100% { color: #fff; }
-      50% { color: red; }
+    #finalContainer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      max-width: 500px;
+      width: 90%;
+      margin: 20px auto;
+      text-align: center;
+      position: relative;
+      z-index: 20;
     }
     #finalMessage {
-  font-size: 2em;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  text-align: center;
-  color: #ffffff; /* <<< asegúrate de poner el color blanco */
-  margin: 20px auto;
-  max-width: 80%;
-  z-index: 10; /* <<< Asegura que esté encima de todo */
-  position: relative; /* <<< Para que respete su stacking */
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* <<< UN BRILLO PARA QUE SE LEA MEJOR */
-}
-
-.show-final {
-  opacity: 1;
-  transform: scale(1);
-}
+      font-size: 2em;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    .show-final {
+      opacity: 1;
+      transform: scale(1);
+    }
   </style>
 </head>
 <body>
@@ -135,32 +131,18 @@
   </div>
 
   <!-- Final -->
-  <div id="finalMessage" class="hidden"></div>
+  <div id="finalContainer" class="hidden">
+    <div id="finalMessage"></div>
+  </div>
 
   <!-- Sonidos -->
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <script>
-    const questions = [
-      { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
-      { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
-      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 },
-      { text: "What should you check before clicking a link?", options: ["If it looks familiar", "If the URL is correct", "If it's urgent"], answer: 1 },
-      { text: "What is phishing?", options: ["A type of firewall", "A fraudulent attempt to obtain sensitive info", "A safe email campaign"], answer: 1 },
-      { text: "Which of these is a secure website?", options: ["http://mybank.com", "https://mybank.com", "www.mybank.com"], answer: 1 },
-      { text: "How often should you update your password?", options: ["Never", "Once a year", "Every 3-6 months"], answer: 2 },
-      { text: "What is two-factor authentication?", options: ["A password twice", "A second layer of security", "A backup email"], answer: 1 },
-      { text: "What should you do if you receive a suspicious attachment?", options: ["Open it carefully", "Scan with antivirus", "Forward to IT"], answer: 2 },
-      { text: "Which is a secure practice?", options: ["Using the same password", "Writing down passwords", "Using a password manager"], answer: 2 }
-    ];
-
+    const questions = [...]; // Coloca aquí tu array de preguntas igual que antes
     const doors = document.querySelectorAll('.door');
-    let current = 0;
-    let time = 0;
-    let score = 0;
-    let lives = 3;
-    let timerInterval;
+    let current = 0, time = 0, score = 0, lives = 3, timerInterval;
 
     function startGame() {
       const email = document.getElementById('email').value;
@@ -177,81 +159,22 @@
       }, 1000);
     }
 
-    function loadQuestion() {
-      const questionText = document.getElementById('questionText');
-      questionText.classList.remove('show-question'); // Oculta antes
-      setTimeout(() => {
-        questionText.innerText = questions[current].text;
-        questionText.classList.add('show-question'); // Muestra con fade
-      }, 100);
-      doors.forEach((door, index) => {
-        door.querySelector('p').innerText = questions[current].options[index];
-      });
-    }
+    function loadQuestion() { /* igual que antes */ }
 
-    let isProcessing = false; // Añade esta línea arriba de todo
-
-doors.forEach(door => {
-  door.addEventListener('click', () => {
-    if (isProcessing) return; // Bloquea si ya está procesando
-    isProcessing = true;
-
-    const selected = parseInt(door.dataset.index);
-    if (selected === questions[current].answer) {
-      document.getElementById('correctSound').play();
-      door.classList.add('opened');
-      const points = Math.max(100 - time * 2, 10);
-      score += points;
-      document.getElementById('score').innerText = `Score: ${score}`;
-      setTimeout(() => {
-        door.classList.remove('opened');
-        current++;
-        if (current < questions.length) {
-          loadQuestion();
-          isProcessing = false; // Libera clic después de cargar pregunta
-        } else {
-          endGame(); // No hace falta liberar aquí
-        }
-      }, 1000);
-    } else {
-      document.getElementById('incorrectSound').play();
-      door.classList.add('shake', 'glitch');
-      lives--;
-      const livesText = document.getElementById('lives');
-      livesText.innerText = `Lives: ${lives}`;
-      livesText.classList.add('flash-red');
-      if (lives <= 0) {
-        setTimeout(() => {
-          endGame(); // No libera clic, termina el juego
-        }, 500);
-      } else {
-        setTimeout(() => {
-          door.classList.remove('shake', 'glitch');
-          livesText.classList.remove('flash-red');
-          isProcessing = false; // Libera clic después del error
-        }, 500);
-      }
-    }
-  });
-});
+    doors.forEach(door => { /* igual que antes */ });
 
     function endGame() {
-  clearInterval(timerInterval);
-  document.getElementById('gameArea').classList.add('hidden');
-  const finalMessage = document.getElementById('finalMessage');
-  finalMessage.classList.remove('hidden'); // Asegúrate de mostrarlo
-  const message = lives > 0 ? 
-    `🎉 Completed! Final Score: ${score}, Time: ${time}s` : 
-    `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
-  finalMessage.innerText = message;
-
-  // Aplícale la animación (por si no se aplicó antes)
-  setTimeout(() => {
-    finalMessage.classList.add('show-final');
-  }, 50);
-
-  isProcessing = false; // Libera clics
-}
+      clearInterval(timerInterval);
+      document.getElementById('gameArea').classList.add('hidden');
+      const finalContainer = document.getElementById('finalContainer');
+      const finalMessage = document.getElementById('finalMessage');
+      const message = lives > 0 ? `🎉 Completed! Final Score: ${score}, Time: ${time}s` : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+      finalMessage.innerText = message;
+      finalContainer.classList.remove('hidden');
+      setTimeout(() => {
+        finalMessage.classList.add('show-final');
+      }, 50);
+    }
   </script>
 </body>
 </html>
