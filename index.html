@@ -137,6 +137,7 @@
 
   <!-- Lógica del juego -->
   <script>
+  document.addEventListener('DOMContentLoaded', () => {
     const questions = [
       { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
       { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
@@ -202,7 +203,11 @@
         }
       });
     });
-  </script>
 
+    // Asignamos la función al botón directamente en JS por si el inline falla
+    document.getElementById('startButton').addEventListener('click', startGame);
+  });
+</script>
+  
 </body>
 </html>
