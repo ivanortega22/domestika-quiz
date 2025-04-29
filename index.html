@@ -84,6 +84,16 @@
     #questionText, #finalMessage {
       font-size: 2em;
     }
+    #finalBox {
+  display: none;
+}
+
+#finalBox.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
   </style>
 </head>
 <body>
@@ -190,6 +200,7 @@
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
       document.getElementById('finalBox').classList.remove('hidden');
+      document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
       sendData();
     }
@@ -202,6 +213,7 @@
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
       document.getElementById('finalBox').classList.remove('hidden');
+      document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
       sendData();
     } else {
