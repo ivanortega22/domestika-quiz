@@ -97,7 +97,6 @@
   </style>
 </head>
 <body>
-  <!-- Pantalla de inicio -->
   <div id="startScreen">
     <h1>Cybersecurity Escape: Dungeon Mode</h1>
     <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;"><br>
@@ -106,7 +105,6 @@
     </button>
   </div>
 
-  <!-- Juego -->
   <div id="gameArea" class="hidden">
     <h2 id="questionText"></h2>
     <div class="doors">
@@ -130,17 +128,27 @@
     </div>
   </div>
 
-  <!-- Final -->
   <div id="finalContainer" class="hidden">
     <div id="finalMessage"></div>
   </div>
 
-  <!-- Sonidos -->
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <script>
-    const questions = [...]; // Coloca aquí tu array de preguntas igual que antes
+    const questions = [
+      { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
+      { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
+      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 },
+      { text: "What should you check before clicking a link?", options: ["If it looks familiar", "If the URL is correct", "If it's urgent"], answer: 1 },
+      { text: "What is phishing?", options: ["A type of firewall", "A fraudulent attempt to obtain sensitive info", "A safe email campaign"], answer: 1 },
+      { text: "Which of these is a secure website?", options: ["http://mybank.com", "https://mybank.com", "www.mybank.com"], answer: 1 },
+      { text: "How often should you update your password?", options: ["Never", "Once a year", "Every 3-6 months"], answer: 2 },
+      { text: "What is two-factor authentication?", options: ["A password twice", "A second layer of security", "A backup email"], answer: 1 },
+      { text: "What should you do if you receive a suspicious attachment?", options: ["Open it carefully", "Scan with antivirus", "Forward to IT"], answer: 2 },
+      { text: "Which is a secure practice?", options: ["Using the same password", "Writing down passwords", "Using a password manager"], answer: 2 }
+    ];
+    
     const doors = document.querySelectorAll('.door');
     let current = 0, time = 0, score = 0, lives = 3, timerInterval;
 
@@ -159,9 +167,63 @@
       }, 1000);
     }
 
-    function loadQuestion() { /* igual que antes */ }
+    function loadQuestion() {
+      const questionText = document.getElementById('questionText');
+      questionText.classList.remove('show-question');
+      setTimeout(() => {
+        questionText.innerText = questions[current].text;
+        questionText.classList.add('show-question');
+      }, 100);
+      doors.forEach((door, index) => {
+        door.querySelector('p').innerText = questions[current].options[index];
+      });
+    }
 
-    doors.forEach(door => { /* igual que antes */ });
+    let isProcessing = false;
+
+    doors.forEach(door => {
+      door.addEventListener('click', () => {
+        if (isProcessing) return;
+        isProcessing = true;
+
+        const selected = parseInt(door.dataset.index);
+        if (selected === questions[current].answer) {
+          document.getElementById('correctSound').play();
+          door.classList.add('opened');
+          const points = Math.max(100 - time * 2, 10);
+          score += points;
+          document.getElementById('score').innerText = `Score: ${score}`;
+          setTimeout(() => {
+            door.classList.remove('opened');
+            current++;
+            if (current < questions.length) {
+              loadQuestion();
+              isProcessing = false;
+            } else {
+              endGame();
+            }
+          }, 1000);
+        } else {
+          document.getElementById('incorrectSound').play();
+          door.classList.add('shake', 'glitch');
+          lives--;
+          const livesText = document.getElementById('lives');
+          livesText.innerText = `Lives: ${lives}`;
+          livesText.classList.add('flash-red');
+          if (lives <= 0) {
+            setTimeout(() => {
+              endGame();
+            }, 500);
+          } else {
+            setTimeout(() => {
+              door.classList.remove('shake', 'glitch');
+              livesText.classList.remove('flash-red');
+              isProcessing = false;
+            }, 500);
+          }
+        }
+      });
+    });
 
     function endGame() {
       clearInterval(timerInterval);
