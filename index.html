@@ -5,9 +5,9 @@
   <title>Cybersecurity Escape: Dungeon Mode</title>
   <style>
     body {
-      background: 
+      background:
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('assets/fondo-dungeon.png') 
+        url('assets/fondo-dungeon.png')
         no-repeat center center fixed;
       background-size: cover;
       font-family: 'Inter', sans-serif;
@@ -72,9 +72,7 @@
     }
 
     .hidden {
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
+      display: none;
     }
 
     #startScreen,
@@ -90,32 +88,7 @@
       margin-top: 20px;
     }
 
-    #finalContainer {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #finalMessage {
-      font-size: 2em;
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-
-    #questionContainer {
+    #finalContainer, #questionContainer {
       background: rgba(0, 0, 0, 0.7);
       padding: 40px;
       border-radius: 15px;
@@ -134,7 +107,7 @@
       align-items: center;
     }
 
-    #questionMessage {
+    #finalMessage, #questionMessage {
       font-size: 2em;
       color: #ffffff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -144,7 +117,9 @@
 <body>
   <div id="startScreen">
     <h1>Cybersecurity Escape: Dungeon Mode</h1>
-    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;"><br>
+    <input type="email" id="email" placeholder="Enter your email"
+           style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;">
+    <br>
     <button onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
       🚀 Start Quiz
     </button>
@@ -154,12 +129,15 @@
     <div class="doors">
       <div class="door" data-index="0">
         <img src="assets/folder.png" alt="Door 1">
+        <p></p>
       </div>
       <div class="door" data-index="1">
         <img src="assets/folder.png" alt="Door 2">
+        <p></p>
       </div>
       <div class="door" data-index="2">
         <img src="assets/folder.png" alt="Door 3">
+        <p></p>
       </div>
     </div>
     <div class="status">
@@ -169,67 +147,95 @@
     </div>
   </div>
 
-  <div id="finalContainer" class="hidden">
-    <div id="finalMessage"></div>
-  </div>
-
   <div id="questionContainer" class="hidden">
     <div id="questionMessage">Loading question...</div>
+  </div>
+
+  <div id="finalContainer" class="hidden">
+    <div id="finalMessage"></div>
   </div>
 
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <script>
+    const questions = [
+      { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
+      { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
+      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 }
+    ];
+
+    let current = 0, score = 0, time = 0, lives = 3, timerInterval;
     const doors = document.querySelectorAll('.door');
-    let time = 0, score = 0, lives = 3, timerInterval;
 
     function startGame() {
       const email = document.getElementById('email').value;
-      if (!email || !email.includes('@')) {
+      if (!email.includes('@')) {
         alert('Please enter a valid email.');
         return;
       }
 
       document.getElementById('startScreen').classList.add('hidden');
       document.getElementById('gameArea').classList.remove('hidden');
-
-      // Mostrar la pregunta como un modal
       document.getElementById('questionContainer').classList.remove('hidden');
-      document.getElementById('questionMessage').innerText = "Which password is the strongest?";
 
-      // Iniciar cronómetro
+      loadQuestion();
+
       timerInterval = setInterval(() => {
         time++;
         document.getElementById('timer').innerText = `Time: ${time}s`;
       }, 1000);
     }
 
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('questionMessage').innerText = q.text;
+      document.getElementById('questionContainer').classList.remove('hidden');
+
+      doors.forEach((door, i) => {
+        door.querySelector('p').innerText = q.options[i];
+      });
+    }
+
     doors.forEach(door => {
       door.addEventListener('click', () => {
-        // Ocultamos la pregunta después de hacer clic
+        if (current >= questions.length) return;
+
+        const selected = parseInt(door.dataset.index);
+        const correct = questions[current].answer;
+
         document.getElementById('questionContainer').classList.add('hidden');
 
-        document.getElementById('correctSound').play();
-        door.classList.add('opened');
+        if (selected === correct) {
+          document.getElementById('correctSound').play();
+          door.classList.add('opened');
+          score += Math.max(100 - time * 2, 10);
+          document.getElementById('score').innerText = `Score: ${score}`;
+        } else {
+          document.getElementById('incorrectSound').play();
+          lives--;
+          document.getElementById('lives').innerText = `Lives: ${lives}`;
+          if (lives <= 0) return endGame();
+        }
 
-        const points = Math.max(100 - time * 2, 10);
-        score += points;
-        document.getElementById('score').innerText = `Score: ${score}`;
-
-        setTimeout(() => {
-          endGame();
-        }, 1000);
+        current++;
+        if (current < questions.length) {
+          setTimeout(() => {
+            doors.forEach(d => d.classList.remove('opened'));
+            loadQuestion();
+          }, 1000);
+        } else {
+          setTimeout(endGame, 1000);
+        }
       });
     });
 
     function endGame() {
       clearInterval(timerInterval);
       document.getElementById('gameArea').classList.add('hidden');
-      const finalContainer = document.getElementById('finalContainer');
-      const finalMessage = document.getElementById('finalMessage');
-      finalMessage.innerText = `🎉 Completed! Final Score: ${score}, Time: ${time}s`;
-      finalContainer.classList.remove('hidden');
+      const msg = lives > 0 ? `🎉 Completed! Final Score: ${score}, Time: ${time}s` : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+      document.getElementById('finalMessage').innerText = msg;
+      document.getElementById('finalContainer').classList.remove('hidden');
     }
   </script>
 </body>
