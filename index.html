@@ -71,6 +71,17 @@
       100% { filter: brightness(1); }
     }
 
+    @keyframes fadeZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9) translate(-50%, -50%);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+      }
+    }
+
     .hidden {
       display: none;
     }
@@ -88,7 +99,8 @@
       margin-top: 20px;
     }
 
-    #finalContainer, #questionContainer {
+    #finalContainer,
+    #questionContainer {
       background: rgba(0, 0, 0, 0.7);
       padding: 40px;
       border-radius: 15px;
@@ -105,9 +117,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      animation: fadeZoomIn 0.5s ease;
     }
 
-    #finalMessage, #questionMessage {
+    #finalMessage,
+    #questionMessage {
       font-size: 2em;
       color: #ffffff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -177,7 +191,6 @@
 
       document.getElementById('startScreen').classList.add('hidden');
       document.getElementById('gameArea').classList.remove('hidden');
-      document.getElementById('questionContainer').classList.remove('hidden');
 
       loadQuestion();
 
@@ -213,6 +226,7 @@
           document.getElementById('score').innerText = `Score: ${score}`;
         } else {
           document.getElementById('incorrectSound').play();
+          door.classList.add('shake', 'glitch');
           lives--;
           document.getElementById('lives').innerText = `Lives: ${lives}`;
           if (lives <= 0) return endGame();
@@ -221,7 +235,7 @@
         current++;
         if (current < questions.length) {
           setTimeout(() => {
-            doors.forEach(d => d.classList.remove('opened'));
+            doors.forEach(d => d.classList.remove('opened', 'shake', 'glitch'));
             loadQuestion();
           }, 1000);
         } else {
@@ -233,7 +247,9 @@
     function endGame() {
       clearInterval(timerInterval);
       document.getElementById('gameArea').classList.add('hidden');
-      const msg = lives > 0 ? `🎉 Completed! Final Score: ${score}, Time: ${time}s` : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+      const msg = lives > 0
+        ? `🎉 Completed! Final Score: ${score}, Time: ${time}s`
+        : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
       document.getElementById('finalMessage').innerText = msg;
       document.getElementById('finalContainer').classList.remove('hidden');
     }
