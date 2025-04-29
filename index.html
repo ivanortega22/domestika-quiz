@@ -84,8 +84,15 @@
     #questionText, #finalMessage {
       font-size: 2em;
     }
-    #finalBox {
+    #finalBox.hidden {
   display: none;
+}
+
+#finalBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #finalBox.show {
@@ -202,7 +209,6 @@
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
       document.getElementById('finalBox').classList.remove('hidden');
-      document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
       sendData();
       gameOver = true;
@@ -216,7 +222,6 @@
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
       document.getElementById('finalBox').classList.remove('hidden');
-      document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
       sendData();
       gameOver = true;
