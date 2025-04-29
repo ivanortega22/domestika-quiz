@@ -80,23 +80,23 @@
     }
     #finalMessage {
   font-size: 2em;
+  color: #ffffff !important;  /* Blanco fuerte, forzado */
+  background: none;           /* Sin fondo que oscurezca */
+  text-align: center;
+  margin: 40px auto;
+  padding: 20px;
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%); /* Igual que el botón */
-  padding: 20px;
-  border-radius: 30px; /* Igual que el botón */
-  margin: 20px auto;
-  max-width: 80%;
-  font-weight: 700; /* Igual que el botón */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Igual que el botón */
+  max-width: 90%;
+  font-weight: bold;
+  z-index: 999;
 }
-    .show-final {
-      opacity: 1;
-      transform: scale(1);
-    }
+
+.show-final {
+  opacity: 1;
+  transform: scale(1);
+}
   </style>
 </head>
 <body>
