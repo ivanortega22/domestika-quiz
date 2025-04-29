@@ -160,17 +160,18 @@
     }, 1000);
 
     function loadQuestion() {
-      const q = questions[current];
-      const container = document.getElementById('questions');
-      container.innerHTML = `<h2>Question ${current + 1}</h2><p>${q.question}</p>`;
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.classList.add('answer-btn');
-        btn.innerHTML = `<svg class="folder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffcc00"><path d="M10 4H2v16h20V6H12l-2-2z"/></svg>${opt}`;
-        btn.onclick = () => checkAnswer(i);
-        container.appendChild(btn);
-      });
-    }
+  const q = questions[current];
+
+  // Muestra el enunciado de la pregunta
+  document.getElementById('questionText').innerText = q.question;
+
+  // Coloca cada opción debajo de cada puerta
+  const doors = document.querySelectorAll('.door');
+  doors.forEach((door, i) => {
+    door.querySelector('p').innerText = q.options[i];
+    door.onclick = () => checkAnswer(i);
+  });
+}
 
     function checkAnswer(index) {
       const correctSound = document.getElementById('correctSound');
@@ -233,9 +234,9 @@ function startGame() {
     alert('Please enter a valid email.');
     return;
   }
-  document.getElementById('startScreen').style.display = 'none'; // Oculta la pantalla de inicio
-  document.querySelector('.container').style.display = 'block';  // Muestra el quiz
-  loadQuestion(); // Empieza el quiz
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('gameScreen').classList.remove('hidden');
+  loadQuestion();
 }
   </script>
   
