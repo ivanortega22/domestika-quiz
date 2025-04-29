@@ -13,10 +13,12 @@
       font-family: 'Inter', sans-serif;
       color: #fff;
       text-align: center;
+      margin: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
     }
     .doors {
       display: flex;
@@ -72,6 +74,15 @@
     }
     .show-question {
       opacity: 1;
+    }
+    #startScreen,
+    #gameArea,
+    #finalContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
     }
     #finalContainer {
       background: rgba(0, 0, 0, 0.7);
