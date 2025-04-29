@@ -87,17 +87,18 @@
   </style>
 </head>
 <body>
+
   <!-- Pantalla de inicio -->
   <div id="startScreen" class="screen">
     <h1>Cybersecurity Escape: Dungeon Mode</h1>
     <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:80%;">
     <br>
-    <button onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b, #ff416c); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
+    <button id="startButton" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b, #ff416c); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
       🚀 Start Quiz
     </button>
   </div>
 
-  <!-- Pantalla del juego -->
+  <!-- Pantalla de juego -->
   <div id="gameScreen" class="screen hidden">
     <div id="questionBox">
       <div id="questionText">Loading...</div>
@@ -134,72 +135,78 @@
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
+  <!-- Lógica del juego -->
   <script>
-    const questions = [
-      { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
-      { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
-      { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 }
-    ];
+    document.addEventListener('DOMContentLoaded', () => {
+      const questions = [
+        { text: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2 },
+        { text: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "support@amaz0n-security.com", "security@yourbank.com"], answer: 1 },
+        { text: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2 }
+      ];
 
-    let current = 0, score = 0, time = 0, lives = 3, timer;
+      let current = 0, score = 0, time = 0, lives = 3, timer;
 
-    function startGame() {
-      const email = document.getElementById('email').value;
-      if (!email.includes('@')) return alert("Please enter a valid email.");
+      function startGame() {
+        const email = document.getElementById('email').value;
+        if (!email.includes('@')) return alert("Please enter a valid email.");
 
-      document.getElementById('startScreen').classList.add('hidden');
-      document.getElementById('gameScreen').classList.remove('hidden');
+        document.getElementById('startScreen').classList.add('hidden');
+        document.getElementById('gameScreen').classList.remove('hidden');
 
-      loadQuestion();
+        loadQuestion();
 
-      timer = setInterval(() => {
-        time++;
-        document.getElementById('timer').innerText = `Time: ${time}s`;
-      }, 1000);
-    }
+        timer = setInterval(() => {
+          time++;
+          document.getElementById('timer').innerText = `Time: ${time}s`;
+        }, 1000);
+      }
 
-    function loadQuestion() {
-      const q = questions[current];
-      document.getElementById('questionText').innerText = q.text;
-      document.querySelectorAll('.door').forEach((door, i) => {
-        door.querySelector('p').innerText = q.options[i];
-      });
-    }
+      function loadQuestion() {
+        const q = questions[current];
+        document.getElementById('questionText').innerText = q.text;
+        document.querySelectorAll('.door').forEach((door, i) => {
+          door.querySelector('p').innerText = q.options[i];
+        });
+      }
 
-    document.querySelectorAll('.door').forEach(door => {
-      door.addEventListener('click', () => {
-        const selected = parseInt(door.dataset.index);
-        const correct = questions[current].answer;
+      function endGame() {
+        clearInterval(timer);
+        document.getElementById('gameScreen').classList.add('hidden');
+        document.getElementById('finalBox').classList.remove('hidden');
+        document.getElementById('finalMessage').innerText =
+          lives > 0
+            ? `🎉 Completed! Final Score: ${score}, Time: ${time}s`
+            : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
+      }
 
-        if (selected === correct) {
-          document.getElementById('correctSound').play();
-          score += Math.max(100 - time * 2, 10);
-          document.getElementById('score').innerText = `Score: ${score}`;
-        } else {
-          document.getElementById('incorrectSound').play();
-          lives--;
-          document.getElementById('lives').innerText = `Lives: ${lives}`;
-          if (lives <= 0) return endGame();
-        }
+      document.getElementById('startButton').onclick = startGame;
 
-        current++;
-        if (current < questions.length) {
-          loadQuestion();
-        } else {
-          endGame();
-        }
+      document.querySelectorAll('.door').forEach(door => {
+        door.addEventListener('click', () => {
+          const selected = parseInt(door.dataset.index);
+          const correct = questions[current].answer;
+
+          if (selected === correct) {
+            document.getElementById('correctSound').play();
+            score += Math.max(100 - time * 2, 10);
+            document.getElementById('score').innerText = `Score: ${score}`;
+          } else {
+            document.getElementById('incorrectSound').play();
+            lives--;
+            document.getElementById('lives').innerText = `Lives: ${lives}`;
+            if (lives <= 0) return endGame();
+          }
+
+          current++;
+          if (current < questions.length) {
+            loadQuestion();
+          } else {
+            endGame();
+          }
+        });
       });
     });
-
-    function endGame() {
-      clearInterval(timer);
-      document.getElementById('gameScreen').classList.add('hidden');
-      document.getElementById('finalBox').classList.remove('hidden');
-      document.getElementById('finalMessage').innerText =
-        lives > 0
-          ? `🎉 Completed! Final Score: ${score}, Time: ${time}s`
-          : `💀 Game Over! Final Score: ${score}, Time: ${time}s`;
-    }
   </script>
+
 </body>
 </html>
