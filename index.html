@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Cybersecurity Escape: Dungeon Mode</title>
   <style>
     body {
@@ -32,6 +32,7 @@
       width: 200px;
       transition: transform 0.5s ease, filter 0.5s ease;
       animation: pulse 2s infinite;
+      cursor: pointer;
     }
 
     .door:hover img {
@@ -114,9 +115,29 @@
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
 
-    .show-final {
-      opacity: 1;
-      transform: scale(1);
+    #questionContainer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #questionMessage {
+      font-size: 2em;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
   </style>
 </head>
@@ -132,16 +153,13 @@
   <div id="gameArea" class="hidden">
     <div class="doors">
       <div class="door" data-index="0">
-        <img src="assets/puerta.png" alt="Door 1">
-        <p></p>
+        <img src="assets/folder.png" alt="Door 1">
       </div>
       <div class="door" data-index="1">
-        <img src="assets/puerta.png" alt="Door 2">
-        <p></p>
+        <img src="assets/folder.png" alt="Door 2">
       </div>
       <div class="door" data-index="2">
-        <img src="assets/puerta.png" alt="Door 3">
-        <p></p>
+        <img src="assets/folder.png" alt="Door 3">
       </div>
     </div>
     <div class="status">
@@ -153,6 +171,10 @@
 
   <div id="finalContainer" class="hidden">
     <div id="finalMessage"></div>
+  </div>
+
+  <div id="questionContainer" class="hidden">
+    <div id="questionMessage">Loading question...</div>
   </div>
 
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
@@ -168,8 +190,15 @@
         alert('Please enter a valid email.');
         return;
       }
+
       document.getElementById('startScreen').classList.add('hidden');
       document.getElementById('gameArea').classList.remove('hidden');
+
+      // Mostrar la pregunta como un modal
+      document.getElementById('questionContainer').classList.remove('hidden');
+      document.getElementById('questionMessage').innerText = "Which password is the strongest?";
+
+      // Iniciar cronómetro
       timerInterval = setInterval(() => {
         time++;
         document.getElementById('timer').innerText = `Time: ${time}s`;
@@ -178,12 +207,16 @@
 
     doors.forEach(door => {
       door.addEventListener('click', () => {
-        const selected = parseInt(door.dataset.index);
+        // Ocultamos la pregunta después de hacer clic
+        document.getElementById('questionContainer').classList.add('hidden');
+
         document.getElementById('correctSound').play();
         door.classList.add('opened');
+
         const points = Math.max(100 - time * 2, 10);
         score += points;
         document.getElementById('score').innerText = `Score: ${score}`;
+
         setTimeout(() => {
           endGame();
         }, 1000);
@@ -197,9 +230,6 @@
       const finalMessage = document.getElementById('finalMessage');
       finalMessage.innerText = `🎉 Completed! Final Score: ${score}, Time: ${time}s`;
       finalContainer.classList.remove('hidden');
-      setTimeout(() => {
-        finalMessage.classList.add('show-final');
-      }, 50);
     }
   </script>
 </body>
