@@ -169,6 +169,7 @@
       document.getElementById('timer').innerText = `Time: ${time}s`;
     }, 1000);
 
+    let gameOver = false;
     function loadQuestion() {
   const q = questions[current];
 
@@ -184,6 +185,7 @@
 }
 
     function checkAnswer(index) {
+  if (gameOver) return; // ❌ Ignora clics si el juego ya terminó
   const correctSound = document.getElementById('correctSound');
   const incorrectSound = document.getElementById('incorrectSound');
 
@@ -203,6 +205,7 @@
       document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
       sendData();
+      gameOver = true;
     }
   } else {
     incorrectSound.play();
@@ -216,6 +219,7 @@
       document.getElementById('finalBox').classList.add('show');
       document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
       sendData();
+      gameOver = true;
     } else {
       setTimeout(loadQuestion, 1000);
     }
