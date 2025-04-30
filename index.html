@@ -56,7 +56,7 @@
       100% { filter: brightness(1); }
     }
 
-    #questionBox, #finalBox {
+    #questionBox {
       background: rgba(0, 0, 0, 0.7);
       padding: 30px;
       border-radius: 15px;
@@ -95,6 +95,17 @@
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
   z-index: 1000;
+}
+    #finalContent {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeZoomIn 0.5s ease;
 }
 
 #finalMessage {
@@ -156,8 +167,10 @@
 
   <!-- Pantalla final -->
   <div id="finalBox" class="hidden">
+  <div id="finalContent">
     <div id="finalMessage"></div>
   </div>
+</div>
 
   <!-- Sonidos -->
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
