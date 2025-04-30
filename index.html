@@ -220,7 +220,12 @@
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
 document.getElementById('finalBox').classList.remove('hidden');
-      document.getElementById('finalMessage').innerText = `🎉 Completed with ${score} points in ${time} seconds! 🎉`;
+      document.getElementById('finalMessage').innerHTML = `
+  <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
+  <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
+  <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives Left: ${lives}</p>
+  <p style="color: #00ff88; font-size: 1.5em;">🎉 Completed! You escaped the dungeon! 🎉</p>
+`;
       sendData();
       gameOver = true;
     }
@@ -233,7 +238,12 @@ document.getElementById('finalBox').classList.remove('hidden');
       clearInterval(timerInterval);
       document.getElementById('gameScreen').classList.add('hidden');
 document.getElementById('finalBox').classList.remove('hidden');
-      document.getElementById('finalMessage').innerText = `💀 Game Over! Final Score: ${score}`;
+      document.getElementById('finalMessage').innerHTML = `
+  <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
+  <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
+  <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives: ${lives}</p>
+  <p style="color: red; font-size: 1.5em;">💀 Game Over! Final Score: ${score}</p>
+`;
       sendData();
       gameOver = true;
     } else {
