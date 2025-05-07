@@ -1,126 +1,46 @@
+<!-- index.html (NEWS) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>CiberDomestika</title>
+  <title>NEWS | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #121212;
-      color: #fff;
-    }
-
-    header {
-      background: #1e1e1e;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    nav a {
-      color: white;
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    section {
-      padding: 3rem 2rem;
-      min-height: 100vh;
-    }
-
-    iframe {
-      width: 100%;
-      max-width: 1000px;
-      height: 500px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    .noticia {
-      background: #1e1e1e;
-      margin-bottom: 2rem;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    .noticia h3 {
-      margin-top: 0;
-      color: #ff4b2b;
-    }
-
-    footer {
-      background: #000;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
+    body { margin: 0; font-family: 'Inter', sans-serif; background: #121212; color: #fff; }
+    header { background: #1e1e1e; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    nav a { color: white; margin-left: 1rem; text-decoration: none; font-weight: bold; }
+    section { padding: 3rem 2rem; }
+    .noticia { background: #1e1e1e; margin-bottom: 2rem; padding: 1.5rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+    .noticia h3 { margin-top: 0; color: #ff4b2b; }
+    footer { background: #000; text-align: center; padding: 1rem; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-
   <header>
     <h1>🛡️ CiberDomestika</h1>
     <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#quiz">Quiz</a>
-      <a href="#progreso">Tu progreso</a>
+      <a href="index.html">NEWS</a>
+      <a href="quiz.html">QUIZ</a>
+      <a href="progreso.html">PROGRESO</a>
     </nav>
   </header>
 
-  <!-- 📰 Sección de Noticias -->
-  <section id="inicio">
+  <section>
     <h2>📰 Noticias de ciberseguridad</h2>
-
     <div class="noticia">
       <h3>Ransomware Attack on DaVita</h3>
-      <p>The U.S. kidney treatment company DaVita suffered a ransomware attack that encrypted parts of its network...</p>
+      <p>The U.S. kidney treatment company DaVita suffered a ransomware attack...</p>
     </div>
-
     <div class="noticia">
       <h3>Phishing masivo en cuentas corporativas de Microsoft 365</h3>
-      <p>Se ha detectado una nueva campaña dirigida a empleados que usan plataformas de colaboración en la nube...</p>
+      <p>Se ha detectado una nueva campaña dirigida a empleados que usan plataformas en la nube...</p>
     </div>
-
-    <!-- Añade más noticias como quieras -->
   </section>
-
-  <!-- 🎮 Sección del Quiz -->
-  <section id="quiz">
-    <h2>🎮 Quiz interactivo</h2>
-    <iframe src="quiz.html" title="Juego interactivo"></iframe>
-  </section>
-
-  <!-- 📊 Sección de Progreso -->
-  <section id="progreso">
-  <h2>📊 Tu progreso</h2>
-  <div style="width: 100vw; overflow-x: auto;">
-    <iframe
-      src="https://lookerstudio.google.com/embed/reporting/eb52a1bf-2255-44f5-887d-48cf2bb15123/page/pqSJF"
-      style="min-width: 1350px; height: 650px; border: 0; box-shadow: none;"
-      allowfullscreen
-      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-    </iframe>
-  </div>
-</section>
 
   <footer>
     © 2025 CiberDomestika. Todos los derechos reservados.
   </footer>
-
 </body>
 </html>
