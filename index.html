@@ -15,10 +15,16 @@
     header {
       position: relative;
       width: 100%;
+      height: 150px;
     }
     .header-image {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      display: block;
+      height: 150px;
+      object-fit: cover;
+      z-index: 1;
     }
     .nav-bar {
       position: absolute;
@@ -26,15 +32,15 @@
       left: 0;
       right: 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       padding: 1rem 2rem;
-      background: rgba(18, 18, 18, 0.8);
-      z-index: 100;
+      background: rgba(18, 18, 18, 0.7);
+      z-index: 2;
     }
     .nav-bar nav a {
       color: white;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       text-decoration: none;
       font-weight: bold;
     }
@@ -66,7 +72,6 @@
   <header>
     <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
     <div class="nav-bar">
-      <div></div>
       <nav>
         <a href="index.html">NEWS</a>
         <a href="quiz.html">QUIZ</a>
