@@ -13,19 +13,26 @@
       color: #fff;
     }
     header {
-      background: #1e1e1e;
-      padding: 1rem 2rem;
+      position: relative;
+      width: 100%;
+    }
+    .header-image {
+      width: 100%;
+      display: block;
+    }
+    .nav-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
+      padding: 1rem 2rem;
+      background: rgba(18, 18, 18, 0.8);
       z-index: 100;
     }
-    header img {
-      height: 40px;
-    }
-    nav a {
+    .nav-bar nav a {
       color: white;
       margin-left: 1rem;
       text-decoration: none;
@@ -57,12 +64,15 @@
 <body>
 
   <header>
-    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Logo">
-    <nav>
-      <a href="index.html">NEWS</a>
-      <a href="quiz.html">QUIZ</a>
-      <a href="progreso.html">PROGRESO</a>
-    </nav>
+    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
+    <div class="nav-bar">
+      <div></div>
+      <nav>
+        <a href="index.html">NEWS</a>
+        <a href="quiz.html">QUIZ</a>
+        <a href="progreso.html">PROGRESO</a>
+      </nav>
+    </div>
   </header>
 
   <section id="inicio">
