@@ -8,44 +8,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #121212;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('assets/fondo-dungeon.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Inter', sans-serif;
       color: #fff;
       margin: 0;
       height: 100vh;
+      overflow: hidden;
     }
-    header {
-      position: relative;
-      width: 100%;
-    }
-    .header-image {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .nav-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: transparent;
-      z-index: 100;
-    }
-    .nav-bar nav a {
-      color: white;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-
+    header { background: #1e1e1e; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    nav a { color: white; margin-left: 1rem; text-decoration: none; font-weight: bold; }
     .hidden { display: none !important; }
-    .screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100vh - 180px); text-align: center; }
+    .screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; }
     .doors { display: flex; justify-content: center; gap: 60px; margin-top: 20px; }
     .door img { width: 200px; transition: transform 0.5s ease; animation: pulse 2s infinite; cursor: pointer; }
     .door:hover img { transform: scale(1.1); }
@@ -72,16 +48,13 @@
   </style>
 </head>
 <body>
-
   <header>
-    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
-    <div class="nav-bar">
-      <nav>
-        <a href="index.html">NEWS</a>
-        <a href="quiz.html">QUIZ</a>
-        <a href="progreso.html">PROGRESO</a>
-      </nav>
-    </div>
+    <h1>🛡️ CiberDomestika</h1>
+    <nav>
+      <a href="index.html">NEWS</a>
+      <a href="quiz.html">QUIZ</a>
+      <a href="progreso.html">PROGRESO</a>
+    </nav>
   </header>
 
   <!-- Pantalla de inicio -->
@@ -132,11 +105,130 @@
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <!-- Lógica del juego -->
-  <!-- (todo tu script permanece igual) -->
+  <script>
+        const questions = [
+      {question: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2},
+      {question: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "security@yourbank.com", "support@amaz0n-security.com"], answer: 2},
+      {question: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2},
+      {question: "What should you check before clicking a link?", options: ["If it looks familiar", "If the URL is correct", "If it's urgent"], answer: 1},
+      {question: "What is phishing?", options: ["A type of firewall", "A fraudulent attempt to obtain sensitive info", "A safe email campaign"], answer: 1},
+      {question: "Which of these is a secure website?", options: ["http://mybank.com", "https://mybank.com", "www.mybank.com"], answer: 1},
+      {question: "How often should you update your password?", options: ["Never", "Once a year", "Every 3-6 months"], answer: 2},
+      {question: "What is two-factor authentication?", options: ["A password twice", "A second layer of security", "A backup email"], answer: 1},
+      {question: "What should you do if you receive a suspicious attachment?", options: ["Open it carefully", "Scan with antivirus", "Forward to IT"], answer: 2},
+      {question: "Which is a secure practice?", options: ["Using the same password", "Writing down passwords", "Using a password manager"], answer: 2}
+    ];
+
+    let current = 0;
+    let time = 0;
+    let score = 0;
+    let lives = 3;
+    let timerInterval;
+    let gameOver = false;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('questionText').innerText = q.question;
+      const doors = document.querySelectorAll('.door');
+      doors.forEach((door, i) => {
+        door.querySelector('p').innerText = q.options[i];
+        door.onclick = () => checkAnswer(i);
+      });
+    }
+
+    function checkAnswer(index) {
+      if (gameOver) return;
+      const correctSound = document.getElementById('correctSound');
+      const incorrectSound = document.getElementById('incorrectSound');
+
+      if (index === questions[current].answer) {
+        correctSound.play();
+        const points = Math.max(100 - time * 2, 10);
+        score += points;
+        document.getElementById('score').innerText = Score: ${score};
+        document.getElementById('questionText').innerText = '✅ Correct!';
+        current++;
+        if (current < questions.length) {
+          setTimeout(loadQuestion, 1000);
+        } else {
+          clearInterval(timerInterval);
+          document.getElementById('gameScreen').classList.add('hidden');
+          document.getElementById('finalBox').classList.remove('hidden');
+          document.getElementById('finalMessage').innerHTML = 
+            <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
+            <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
+            <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives Left: ${lives}</p>
+            <p style="color: #00ff88; font-size: 1.5em;">🎉 Completed! You escaped the dungeon! 🎉</p>
+          ;
+          sendData();
+          gameOver = true;
+        }
+      } else {
+        incorrectSound.play();
+        lives--;
+        document.getElementById('lives').innerText = Lives: ${lives};
+        document.getElementById('questionText').innerText = '❌ Incorrect! Try again.';
+        if (lives <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('gameScreen').classList.add('hidden');
+          document.getElementById('finalBox').classList.remove('hidden');
+          document.getElementById('finalMessage').innerHTML = 
+            <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
+            <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
+            <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives: ${lives}</p>
+            <p style="color: red; font-size: 1.5em;">💀 Game Over! Final Score: ${score}</p>
+          ;
+          sendData();
+          gameOver = true;
+        } else {
+          setTimeout(loadQuestion, 1000);
+        }
+      }
+    }
+
+    function sendData() {
+      const email = document.getElementById('email').value;
+      if (!email) {
+        alert('Please enter your email.');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('entry.69344473', email);
+      formData.append('entry.1881670432', score);
+      formData.append('entry.1352149982', time);
+      fetch('https://docs.google.com/forms/u/0/d/1SiorvIfG-thy0tuoCo48R84GyAqiu9InZxwEVCncQQQ/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      }).then(() => console.log('Form submitted!'));
+    }
+
+    function startGame() {
+      const email = document.getElementById('email').value;
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email.');
+        return;
+      }
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('gameScreen').classList.remove('hidden');
+      time = 0;
+      score = 0;
+      lives = 3;
+      document.getElementById('timer').innerText = Time: 0s;
+      document.getElementById('score').innerText = Score: 0;
+      document.getElementById('lives').innerText = Lives: 3;
+      gameOver = false;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        time++;
+        document.getElementById('timer').innerText = Time: ${time}s;
+      }, 1000);
+      loadQuestion();
+    }
+  </script>
 
   <footer>
     © 2025 CiberDomestika. Todos los derechos reservados.
   </footer>
-
 </body>
 </html>
