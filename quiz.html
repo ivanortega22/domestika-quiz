@@ -1,4 +1,3 @@
-<!-- quiz.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,9 +16,35 @@
       height: 100vh;
       overflow: hidden;
     }
-    header { background: #1e1e1e; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-    header h1 { margin: 0; font-size: 1.5rem; }
-    nav a { color: white; margin-left: 1rem; text-decoration: none; font-weight: bold; }
+    header {
+      position: relative;
+      width: 100%;
+    }
+    .header-image {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .nav-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: transparent;
+      z-index: 100;
+    }
+    .nav-bar nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
     .hidden { display: none !important; }
     .screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; }
     .doors { display: flex; justify-content: center; gap: 60px; margin-top: 20px; }
@@ -49,7 +74,6 @@
 </head>
 <body>
   <header>
-    <header>
     <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
     <div class="nav-bar">
       <nav>
@@ -107,9 +131,9 @@
   <audio id="correctSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
   <audio id="incorrectSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
-  <!-- Lógica del juego -->
+  <!-- Script del juego -->
   <script>
-        const questions = [
+    const questions = [
       {question: "Which password is the strongest?", options: ["password123", "Verano2024", "T&g9$Lp!2z"], answer: 2},
       {question: "Which email looks suspicious?", options: ["invoice@trustedvendor.com", "security@yourbank.com", "support@amaz0n-security.com"], answer: 2},
       {question: "What do you do with a security alert link?", options: ["Click immediately", "Ignore", "Verify through official site"], answer: 2},
@@ -148,45 +172,42 @@
         correctSound.play();
         const points = Math.max(100 - time * 2, 10);
         score += points;
-        document.getElementById('score').innerText = Score: ${score};
+        document.getElementById('score').innerText = `Score: ${score}`;
         document.getElementById('questionText').innerText = '✅ Correct!';
         current++;
         if (current < questions.length) {
           setTimeout(loadQuestion, 1000);
         } else {
-          clearInterval(timerInterval);
-          document.getElementById('gameScreen').classList.add('hidden');
-          document.getElementById('finalBox').classList.remove('hidden');
-          document.getElementById('finalMessage').innerHTML = 
-            <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
-            <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
-            <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives Left: ${lives}</p>
-            <p style="color: #00ff88; font-size: 1.5em;">🎉 Completed! You escaped the dungeon! 🎉</p>
-          ;
-          sendData();
-          gameOver = true;
+          endGame(true);
         }
       } else {
         incorrectSound.play();
         lives--;
-        document.getElementById('lives').innerText = Lives: ${lives};
+        document.getElementById('lives').innerText = `Lives: ${lives}`;
         document.getElementById('questionText').innerText = '❌ Incorrect! Try again.';
         if (lives <= 0) {
-          clearInterval(timerInterval);
-          document.getElementById('gameScreen').classList.add('hidden');
-          document.getElementById('finalBox').classList.remove('hidden');
-          document.getElementById('finalMessage').innerHTML = 
-            <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
-            <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
-            <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives: ${lives}</p>
-            <p style="color: red; font-size: 1.5em;">💀 Game Over! Final Score: ${score}</p>
-          ;
-          sendData();
-          gameOver = true;
+          endGame(false);
         } else {
           setTimeout(loadQuestion, 1000);
         }
       }
+    }
+
+    function endGame(won) {
+      clearInterval(timerInterval);
+      document.getElementById('gameScreen').classList.add('hidden');
+      document.getElementById('finalBox').classList.remove('hidden');
+      const message = won
+        ? `<p style="color: #00ff88; font-size: 1.5em;">🎉 Completed! You escaped the dungeon! 🎉</p>`
+        : `<p style="color: red; font-size: 1.5em;">💀 Game Over! Final Score: ${score}</p>`;
+      document.getElementById('finalMessage').innerHTML = `
+        <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
+        <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
+        <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives: ${lives}</p>
+        ${message}
+      `;
+      sendData();
+      gameOver = true;
     }
 
     function sendData() {
@@ -217,14 +238,14 @@
       time = 0;
       score = 0;
       lives = 3;
-      document.getElementById('timer').innerText = Time: 0s;
-      document.getElementById('score').innerText = Score: 0;
-      document.getElementById('lives').innerText = Lives: 3;
       gameOver = false;
+      document.getElementById('timer').innerText = `Time: 0s`;
+      document.getElementById('score').innerText = `Score: 0`;
+      document.getElementById('lives').innerText = `Lives: 3`;
       clearInterval(timerInterval);
       timerInterval = setInterval(() => {
         time++;
-        document.getElementById('timer').innerText = Time: ${time}s;
+        document.getElementById('timer').innerText = `Time: ${time}s`;
       }, 1000);
       loadQuestion();
     }
