@@ -41,58 +41,72 @@
       font-weight: bold;
       font-size: 1rem;
     }
-    section {
+
+    section#inicio {
       padding: 3rem 2rem;
       min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
+
+    section#inicio h2 {
+      grid-column: 1 / -1;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     .noticia {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.noticia:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
+    .noticia:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
 
-.noticia h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1a1a1a;
-}
+    .noticia h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
 
-.noticia p {
-  margin-bottom: 1rem;
-  color: #555;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
+    .noticia p {
+      margin-bottom: 1rem;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
 
-.noticia a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 10px 16px;
-  background: #000;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: background 0.2s ease;
-}
+    .noticia a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 10px 16px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
 
-.noticia a:hover {
-  background: #333;
-}
+    .noticia a:hover {
+      background: #333;
+    }
+
     footer {
       background: #000;
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
+      color: #fff;
     }
   </style>
 </head>
@@ -110,68 +124,68 @@
   </header>
 
   <section id="inicio">
-  <h2>📰 Cybersecurity News</h2>
+    <h2>📰 Cybersecurity News</h2>
 
-  <div class="noticia">
-    <h3>LummaC2 malware dismantled</h3>
-    <p>An international coalition has dismantled the LummaC2 malware, used to steal sensitive data from over 394,000 systems. The operation was led by Microsoft and government agencies.</p>
-    <a href="https://www.wired.com/story/lumma-stealer-takedown-disrupted" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>LummaC2 malware dismantled</h3>
+      <p>An international coalition has dismantled the LummaC2 malware, used to steal sensitive data from over 394,000 systems. The operation was led by Microsoft and government agencies.</p>
+      <a href="https://www.wired.com/story/lumma-stealer-takedown-disrupted" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Marks & Spencer hit by cyberattack</h3>
-    <p>British retailer Marks & Spencer suffered a cyberattack compromising personal data of customers and employees, with estimated losses of £300 million.</p>
-    <a href="https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Marks & Spencer hit by cyberattack</h3>
+      <p>British retailer Marks & Spencer suffered a cyberattack compromising personal data of customers and employees, with estimated losses of £300 million.</p>
+      <a href="https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Indian companies increase cybersecurity spending</h3>
-    <p>Amid geopolitical tensions, companies in India are increasing cybersecurity investments to protect critical data and reduce risks.</p>
-    <a href="https://economictimes.indiatimes.com/tech/technology/india-inc-shoring-up-its-cybersecurity-spends-amid-spillover-threats/articleshow/121321439.cms" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Indian companies increase cybersecurity spending</h3>
+      <p>Amid geopolitical tensions, companies in India are increasing cybersecurity investments to protect critical data and reduce risks.</p>
+      <a href="https://economictimes.indiatimes.com/tech/technology/india-inc-shoring-up-its-cybersecurity-spends-amid-spillover-threats/articleshow/121321439.cms" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Scattered Spider targets retail sector</h3>
-    <p>The hacking group Scattered Spider has intensified attacks against retailers in the UK and US, using advanced social engineering techniques.</p>
-    <a href="https://www.theguardian.com/technology/2025/may/16/scattered-spider-hackers-uk-cyber-attacks-google-us-retailers" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Scattered Spider targets retail sector</h3>
+      <p>The hacking group Scattered Spider has intensified attacks against retailers in the UK and US, using advanced social engineering techniques.</p>
+      <a href="https://www.theguardian.com/technology/2025/may/16/scattered-spider-hackers-uk-cyber-attacks-google-us-retailers" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Japan passes active cyber defense law</h3>
-    <p>Japan has enacted a new law allowing authorities to trace and neutralize foreign cyber threats, reinforcing its defensive stance.</p>
-    <a href="https://www.ft.com/content/039103cc-5b38-4d10-97ba-c74cfff86793" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Japan passes active cyber defense law</h3>
+      <p>Japan has enacted a new law allowing authorities to trace and neutralize foreign cyber threats, reinforcing its defensive stance.</p>
+      <a href="https://www.ft.com/content/039103cc-5b38-4d10-97ba-c74cfff86793" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Only 7% of Indian organizations are prepared</h3>
-    <p>A Cisco report reveals that only 7% of organizations in India are adequately prepared to face modern cyber threats.</p>
-    <a href="https://economictimes.indiatimes.com/tech/technology/only-7-of-organisations-in-india-ready-for-cyber-threats-cisco-report/articleshow/121291935.cms" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Only 7% of Indian organizations are prepared</h3>
+      <p>A Cisco report reveals that only 7% of organizations in India are adequately prepared to face modern cyber threats.</p>
+      <a href="https://economictimes.indiatimes.com/tech/technology/only-7-of-organisations-in-india-ready-for-cyber-threats-cisco-report/articleshow/121291935.cms" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Companies ignore cybersecurity advice</h3>
-    <p>The UK's NCSC criticizes companies for ignoring basic cybersecurity guidelines, increasing their vulnerability to attacks.</p>
-    <a href="https://www.thetimes.co.uk/article/businesses-ignore-advice-on-preventing-cyberattacks-says-gchq-d5hvfs057" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Companies ignore cybersecurity advice</h3>
+      <p>The UK's NCSC criticizes companies for ignoring basic cybersecurity guidelines, increasing their vulnerability to attacks.</p>
+      <a href="https://www.thetimes.co.uk/article/businesses-ignore-advice-on-preventing-cyberattacks-says-gchq-d5hvfs057" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>CrowdStrike Global Threat Report 2025</h3>
-    <p>The annual CrowdStrike report highlights a 150% increase in China-linked cyber activity and 79% of detections without malware.</p>
-    <a href="https://www.crowdstrike.com/en-us/global-threat-report/" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>CrowdStrike Global Threat Report 2025</h3>
+      <p>The annual CrowdStrike report highlights a 150% increase in China-linked cyber activity and 79% of detections without malware.</p>
+      <a href="https://www.crowdstrike.com/en-us/global-threat-report/" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>Iberian Peninsula blackout under investigation</h3>
-    <p>A massive blackout in Spain and Portugal is under investigation for possible cyber-related causes, though authorities have not confirmed the origin yet.</p>
-    <a href="https://en.wikipedia.org/wiki/2025_Iberian_Peninsula_blackout" target="_blank">Read more</a>
-  </div>
+    <div class="noticia">
+      <h3>Iberian Peninsula blackout under investigation</h3>
+      <p>A massive blackout in Spain and Portugal is under investigation for possible cyber-related causes, though authorities have not confirmed the origin yet.</p>
+      <a href="https://en.wikipedia.org/wiki/2025_Iberian_Peninsula_blackout" target="_blank">Read more</a>
+    </div>
 
-  <div class="noticia">
-    <h3>LockBit suffers internal data leak</h3>
-    <p>The ransomware group LockBit has been exposed in a data leak revealing internal information about its operations and affiliates.</p>
-    <a href="https://www.linkedin.com/pulse/cybersecurity-institute-news-roundup-19-may-2025-entrust-ypwqe" target="_blank">Read more</a>
-  </div>
-</section>
+    <div class="noticia">
+      <h3>LockBit suffers internal data leak</h3>
+      <p>The ransomware group LockBit has been exposed in a data leak revealing internal information about its operations and affiliates.</p>
+      <a href="https://www.linkedin.com/pulse/cybersecurity-institute-news-roundup-19-may-2025-entrust-ypwqe" target="_blank">Read more</a>
+    </div>
+  </section>
 
   <footer>
     © 2025 CiberDomestika. Todos los derechos reservados.
