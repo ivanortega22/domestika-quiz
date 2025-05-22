@@ -4,28 +4,27 @@
   <meta charset="UTF-8" />
   <title>QUIZ | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
     body {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                  url('assets/fondo-dungeon.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Inter', sans-serif;
-      color: #fff;
       margin: 0;
-      height: 100vh;
-      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
     }
+
     header {
       position: relative;
       width: 100%;
     }
+
     .header-image {
       width: 100%;
       max-height: 180px;
       object-fit: cover;
       display: block;
     }
+
     .nav-bar {
       position: absolute;
       top: 0;
@@ -38,6 +37,7 @@
       background: transparent;
       z-index: 100;
     }
+
     .nav-bar nav a {
       color: white;
       margin-left: 1.5rem;
@@ -45,36 +45,123 @@
       font-weight: bold;
       font-size: 1rem;
     }
-    .hidden { display: none !important; }
-    .screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; }
-    .doors { display: flex; justify-content: center; gap: 60px; margin-top: 20px; }
-    .door img { width: 200px; transition: transform 0.5s ease; animation: pulse 2s infinite; cursor: pointer; }
-    .door:hover img { transform: scale(1.1); }
-    .status { margin-top: 20px; }
-    @keyframes pulse { 0% { filter: brightness(1); } 50% { filter: brightness(1.2); } 100% { filter: brightness(1); } }
-    #questionBox {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
       max-width: 600px;
-      margin-bottom: 30px;
-      animation: fadeZoomIn 0.5s ease;
+      width: 100%;
+      margin: 1rem auto;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    @keyframes fadeZoomIn {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     }
-    h1, h2 { text-shadow: 0 0 10px rgba(255,255,255,0.9); }
-    #questionText, #finalMessage { font-size: 2em; }
-    #finalBox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.6); z-index: 1000; }
-    #finalContent { background: rgba(0, 0, 0, 0.8); padding: 30px; border-radius: 15px; box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); max-width: 600px; width: 90%; margin: 0 auto; text-align: center; animation: fadeZoomIn 0.5s ease; }
-    #finalMessage { font-size: 2em; padding: 20px; background: rgba(0, 0, 0, 0.8); border-radius: 15px; text-align: center; margin: 0 auto; }
+
+    input[type="email"] {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+      margin: 1rem 0;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .doors {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .door img {
+      width: 150px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .door:hover img {
+      transform: scale(1.05);
+    }
+
+    .status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #finalBox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #finalContent {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    #finalContent p {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
+    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image" />
     <div class="nav-bar">
       <nav>
         <a href="index.html">NEWS</a>
@@ -86,30 +173,29 @@
 
   <!-- Pantalla de inicio -->
   <div id="startScreen" class="screen">
-    <h1>Cybersecurity</h1>
-    <input type="email" id="email" placeholder="Enter your email" style="padding:10px; border-radius:5px; border:none; margin-bottom:20px; width:50%;">
-    <br>
-    <button id="startButton" onclick="startGame()" style="padding:12px 24px; background: linear-gradient(135deg, #ff4b2b, #ff416c); color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:700;">
-      🚀 Start Quiz
-    </button>
+    <div class="card">
+      <h1>Cybersecurity Quiz</h1>
+      <input type="email" id="email" placeholder="Enter your email" />
+      <button onclick="startGame()">🚀 Start Quiz</button>
+    </div>
   </div>
 
   <!-- Pantalla de juego -->
   <div id="gameScreen" class="screen hidden">
-    <div id="questionBox">
+    <div class="card" id="questionBox">
       <div id="questionText">Loading...</div>
     </div>
     <div class="doors">
       <div class="door" data-index="0">
-        <img src="assets/puerta.png" alt="Door 1">
+        <img src="assets/puerta.png" alt="Door 1" />
         <p></p>
       </div>
       <div class="door" data-index="1">
-        <img src="assets/puerta.png" alt="Door 2">
+        <img src="assets/puerta.png" alt="Door 2" />
         <p></p>
       </div>
       <div class="door" data-index="2">
-        <img src="assets/puerta.png" alt="Door 3">
+        <img src="assets/puerta.png" alt="Door 3" />
         <p></p>
       </div>
     </div>
@@ -198,12 +284,12 @@
       document.getElementById('gameScreen').classList.add('hidden');
       document.getElementById('finalBox').classList.remove('hidden');
       const message = won
-        ? `<p style="color: #00ff88; font-size: 1.5em;">🎉 Completed! You escaped the dungeon! 🎉</p>`
+        ? `<p style="color: #00aa66; font-size: 1.5em;">🎉 Completed! You escaped the dungeon!</p>`
         : `<p style="color: red; font-size: 1.5em;">💀 Game Over! Final Score: ${score}</p>`;
       document.getElementById('finalMessage').innerHTML = `
-        <p style="margin: 0; font-size: 1.2em;">⏱️ Time: ${time}s</p>
-        <p style="margin: 0; font-size: 1.2em;">💯 Score: ${score}</p>
-        <p style="margin: 0 0 20px 0; font-size: 1.2em;">❤️ Lives: ${lives}</p>
+        <p>⏱️ Time: ${time}s</p>
+        <p>💯 Score: ${score}</p>
+        <p>❤️ Lives: ${lives}</p>
         ${message}
       `;
       sendData();
@@ -224,7 +310,7 @@
         method: 'POST',
         mode: 'no-cors',
         body: formData
-      }).then(() => console.log('Form submitted!'));
+      });
     }
 
     function startGame() {
@@ -233,7 +319,7 @@
         alert('Please enter a valid email.');
         return;
       }
-      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('startScreen').classList.add('hidden');
       document.getElementById('gameScreen').classList.remove('hidden');
       time = 0;
       score = 0;
