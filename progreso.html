@@ -9,19 +9,22 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #121212;
-      color: #fff;
+      background: #f8f8f8;
+      color: #333;
     }
+
     header {
       position: relative;
       width: 100%;
     }
+
     .header-image {
       width: 100%;
       max-height: 180px;
       object-fit: cover;
       display: block;
     }
+
     .nav-bar {
       position: absolute;
       top: 0;
@@ -34,6 +37,7 @@
       background: transparent;
       z-index: 100;
     }
+
     .nav-bar nav a {
       color: white;
       margin-left: 1.5rem;
@@ -41,22 +45,39 @@
       font-weight: bold;
       font-size: 1rem;
     }
-    section {
+
+    section#progreso {
       padding: 3rem 2rem;
-      min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
     }
+
+    section#progreso h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .progress-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+    }
+
     iframe {
       width: 100%;
-      min-width: 1350px;
+      min-width: 1000px;
       height: 650px;
-      border: 0;
-      box-shadow: none;
+      border: none;
     }
+
     footer {
       background: #000;
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
+      color: #fff;
     }
   </style>
 </head>
@@ -75,8 +96,11 @@
 
   <section id="progreso">
     <h2>📊 Your progress</h2>
-    <div style="width: 100vw; overflow-x: auto;">
-      <iframe src="https://lookerstudio.google.com/embed/reporting/eb52a1bf-2255-44f5-887d-48cf2bb15123/page/pqSJF" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+    <div class="progress-card">
+      <iframe src="https://lookerstudio.google.com/embed/reporting/eb52a1bf-2255-44f5-887d-48cf2bb15123/page/pqSJF"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
     </div>
   </section>
 
