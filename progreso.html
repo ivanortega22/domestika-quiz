@@ -11,6 +11,11 @@
     th { background: #f2f2f2; }
     #logout { margin-top: 1rem; }
   </style>
+  <script>
+  if (!localStorage.getItem("userEmail")) {
+    window.location.href = "login.html";
+  }
+</script>
 </head>
 <body>
   <h1>Tu progreso</h1>
