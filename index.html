@@ -121,6 +121,11 @@
       color: #fff;
     }
   </style>
+  <script>
+  if (!localStorage.getItem("userEmail")) {
+    window.location.href = "login.html";
+  }
+</script>
 </head>
 <body>
 
