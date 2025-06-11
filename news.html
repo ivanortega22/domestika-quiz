@@ -115,7 +115,7 @@
   </style>
 
   <script>
-    // Protección: solo accede si está logueado
+    // Redirección si no hay sesión
     const email = localStorage.getItem("userEmail");
     if (!email) {
       window.location.href = "index.html";
@@ -137,26 +137,49 @@
 
   <section id="inicio">
     <h2>📰 News</h2>
-
-    <div class="noticia">
-      <h3>LummaC2 malware dismantled</h3>
-      <p>An international coalition has dismantled the LummaC2 malware, used to steal sensitive data from over 394,000 systems. The operation was led by Microsoft and government agencies.</p>
-      <a href="https://www.wired.com/story/lumma-stealer-takedown-disrupted" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>Marks & Spencer hit by cyberattack</h3>
-      <p>British retailer Marks & Spencer suffered a cyberattack compromising personal data of customers and employees, with estimated losses of £300 million.</p>
-      <a href="https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/" target="_blank">Read more</a>
-    </div>
-
-    <!-- Puedes seguir añadiendo más noticias aquí -->
-
+    <!-- Noticias se insertarán aquí dinámicamente -->
   </section>
 
   <footer>
     © 2025 CiberDomestika. Todos los derechos reservados.
   </footer>
 
+  <script>
+    const news = [
+      {
+        title: "LummaC2 malware dismantled",
+        text: "An international coalition has dismantled the LummaC2 malware, used to steal sensitive data from over 394,000 systems. The operation was led by Microsoft and government agencies.",
+        link: "https://www.wired.com/story/lumma-stealer-takedown-disrupted"
+      },
+      {
+        title: "Marks & Spencer hit by cyberattack",
+        text: "British retailer Marks & Spencer suffered a cyberattack compromising personal data of customers and employees, with estimated losses of £300 million.",
+        link: "https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/"
+      },
+      {
+        title: "Cisco patches critical firewall flaw",
+        text: "Cisco has issued a patch for a critical firewall vulnerability that could be exploited remotely without authentication.",
+        link: "https://www.bleepingcomputer.com/news/security/cisco-patches-critical-firewall-flaw/"
+      },
+      {
+        title: "WhatsApp zero-day vulnerability found",
+        text: "A new zero-day vulnerability affecting WhatsApp could allow attackers to access chats and metadata. Update immediately.",
+        link: "https://www.securityweek.com/whatsapp-zero-day-vulnerability"
+      }
+    ];
+
+    const section = document.getElementById("inicio");
+
+    news.forEach(noticia => {
+      const div = document.createElement("div");
+      div.className = "noticia";
+      div.innerHTML = `
+        <h3>${noticia.title}</h3>
+        <p>${noticia.text}</p>
+        <a href="${noticia.link}" target="_blank">Read more</a>
+      `;
+      section.appendChild(div);
+    });
+  </script>
 </body>
 </html>
