@@ -72,16 +72,6 @@
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     }
 
-    input[type="email"] {
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 100%;
-      max-width: 400px;
-      margin: 1rem 0;
-      font-size: 1rem;
-    }
-
     button {
       padding: 12px 24px;
       background: #000;
@@ -159,10 +149,10 @@
     }
   </style>
   <script>
-  if (!localStorage.getItem("userEmail")) {
-    window.location.href = "login.html";
-  }
-</script>
+    if (!localStorage.getItem("userEmail")) {
+      window.location.href = "login.html";
+    }
+  </script>
 </head>
 <body>
   <header>
@@ -180,7 +170,6 @@
   <div id="startScreen" class="screen">
     <div class="card">
       <h1>Cybersecurity Quiz</h1>
-      <input type="email" id="email" placeholder="Enter your email" />
       <button onclick="startGame()">🚀 Start Quiz</button>
     </div>
   </div>
@@ -302,11 +291,8 @@
     }
 
     function sendData() {
-      const email = document.getElementById('email').value;
-      if (!email) {
-        alert('Please enter your email.');
-        return;
-      }
+      const email = localStorage.getItem('userEmail');
+      if (!email) return;
       const formData = new FormData();
       formData.append('entry.69344473', email);
       formData.append('entry.1881670432', score);
@@ -319,17 +305,12 @@
     }
 
     function startGame() {
-      const email = document.getElementById('email').value;
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid email.');
-        return;
-      }
-      document.getElementById('startScreen').classList.add('hidden');
-      document.getElementById('gameScreen').classList.remove('hidden');
       time = 0;
       score = 0;
       lives = 3;
       gameOver = false;
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
       document.getElementById('timer').innerText = `Time: 0s`;
       document.getElementById('score').innerText = `Score: 0`;
       document.getElementById('lives').innerText = `Lives: 3`;
