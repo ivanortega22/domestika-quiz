@@ -77,7 +77,9 @@
 
       try {
         const res = await fetch(`https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec?action=register&email=${encodeURIComponent(email)}`);
-        const data = await res.json();
+        const text = await res.text();
+console.log("Respuesta del servidor:", text);
+const data = JSON.parse(text);
 
         if (data.success) {
           msg.textContent = "Registro completado. Ya puedes iniciar sesión.";
