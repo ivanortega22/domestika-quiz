@@ -59,7 +59,7 @@
   <div class="login-box">
     <h1>Crear cuenta</h1>
     <input type="email" id="email" placeholder="Tu email" />
-    <input type="password" id="password" placeholder="Tu contraseña" />
+    <input type="password" id="password" placeholder="Contraseña" />
     <button onclick="register()">Registrarse</button>
     <div id="message"></div>
   </div>
@@ -71,24 +71,39 @@
       const msg = document.getElementById("message");
       msg.textContent = "";
 
-      if (!email.includes("@") || !email.includes(".") || password.length < 3) {
-        msg.textContent = "Introduce un email válido y una contraseña.";
+      if (!email.includes("@") || !email.includes(".")) {
+        msg.textContent = "Introduce un email válido.";
         msg.className = "error";
         return;
       }
 
+      if (password.length < 4) {
+        msg.textContent = "La contraseña debe tener al menos 4 caracteres.";
+        msg.className = "error";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("action", "register");
+
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec?action=register&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+        const res = await fetch("https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec", {
+          method: "POST",
+          body: formData
+        });
+
         const data = await res.json();
 
         if (data.success) {
-          msg.textContent = "✅ Registro completado. Ya puedes iniciar sesión.";
+          msg.textContent = "Registro completado. Ya puedes iniciar sesión.";
           msg.className = "success";
         } else {
           msg.textContent = data.message;
           msg.className = "error";
         }
-      } catch {
+      } catch (error) {
         msg.textContent = "Error de conexión.";
         msg.className = "error";
       }
