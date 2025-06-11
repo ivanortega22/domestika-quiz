@@ -12,16 +12,19 @@
       background: #f8f8f8;
       color: #333;
     }
+
     header {
       position: relative;
       width: 100%;
     }
+
     .header-image {
       width: 100%;
       max-height: 180px;
       object-fit: cover;
       display: block;
     }
+
     .nav-bar {
       position: absolute;
       top: 0;
@@ -34,24 +37,13 @@
       background: transparent;
       z-index: 100;
     }
+
     .nav-bar nav a {
       color: white;
       margin-left: 1.5rem;
       text-decoration: none;
       font-weight: bold;
       font-size: 1rem;
-    }
-
-    .login-btn {
-      background: #000;
-      color: #fff !important;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: background 0.2s ease;
-    }
-
-    .login-btn:hover {
-      background: #333;
     }
 
     section#inicio {
@@ -121,11 +113,14 @@
       color: #fff;
     }
   </style>
+
   <script>
-  if (!localStorage.getItem("userEmail")) {
-    window.location.href = "login.html";
-  }
-</script>
+    // Protección: solo accede si está logueado
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      window.location.href = "index.html";
+    }
+  </script>
 </head>
 <body>
 
@@ -133,9 +128,9 @@
     <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
     <div class="nav-bar">
       <nav>
-        <a href="index.html">NEWS</a>
+        <a href="news.html">NEWS</a>
         <a href="quiz.html">QUIZ</a>
-        <a href="login.html" class="login-btn">LOGIN</a>
+        <a href="progreso.html">PROGRESS</a>
       </nav>
     </div>
   </header>
@@ -155,53 +150,8 @@
       <a href="https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/" target="_blank">Read more</a>
     </div>
 
-    <div class="noticia">
-      <h3>Indian companies increase cybersecurity spending</h3>
-      <p>Amid geopolitical tensions, companies in India are increasing cybersecurity investments to protect critical data and reduce risks.</p>
-      <a href="https://economictimes.indiatimes.com/tech/technology/india-inc-shoring-up-its-cybersecurity-spends-amid-spillover-threats/articleshow/121321439.cms" target="_blank">Read more</a>
-    </div>
+    <!-- Puedes seguir añadiendo más noticias aquí -->
 
-    <div class="noticia">
-      <h3>Scattered Spider targets retail sector</h3>
-      <p>The hacking group Scattered Spider has intensified attacks against retailers in the UK and US, using advanced social engineering techniques.</p>
-      <a href="https://www.theguardian.com/technology/2025/may/16/scattered-spider-hackers-uk-cyber-attacks-google-us-retailers" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>Japan passes active cyber defense law</h3>
-      <p>Japan has enacted a new law allowing authorities to trace and neutralize foreign cyber threats, reinforcing its defensive stance.</p>
-      <a href="https://www.ft.com/content/039103cc-5b38-4d10-97ba-c74cfff86793" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>Only 7% of Indian organizations are prepared</h3>
-      <p>A Cisco report reveals that only 7% of organizations in India are adequately prepared to face modern cyber threats.</p>
-      <a href="https://economictimes.indiatimes.com/tech/technology/only-7-of-organisations-in-india-ready-for-cyber-threats-cisco-report/articleshow/121291935.cms" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>Companies ignore cybersecurity advice</h3>
-      <p>The UK's NCSC criticizes companies for ignoring basic cybersecurity guidelines, increasing their vulnerability to attacks.</p>
-      <a href="https://www.thetimes.co.uk/article/businesses-ignore-advice-on-preventing-cyberattacks-says-gchq-d5hvfs057" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>CrowdStrike Global Threat Report 2025</h3>
-      <p>The annual CrowdStrike report highlights a 150% increase in China-linked cyber activity and 79% of detections without malware.</p>
-      <a href="https://www.crowdstrike.com/en-us/global-threat-report/" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>Iberian Peninsula blackout under investigation</h3>
-      <p>A massive blackout in Spain and Portugal is under investigation for possible cyber-related causes, though authorities have not confirmed the origin yet.</p>
-      <a href="https://en.wikipedia.org/wiki/2025_Iberian_Peninsula_blackout" target="_blank">Read more</a>
-    </div>
-
-    <div class="noticia">
-      <h3>LockBit suffers internal data leak</h3>
-      <p>The ransomware group LockBit has been exposed in a data leak revealing internal information about its operations and affiliates.</p>
-      <a href="https://www.linkedin.com/pulse/cybersecurity-institute-news-roundup-19-may-2025-entrust-ypwqe" target="_blank">Read more</a>
-    </div>
   </section>
 
   <footer>
