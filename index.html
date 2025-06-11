@@ -31,7 +31,7 @@
       font-size: 1.4rem;
     }
 
-    input[type="email"] {
+    input {
       width: 100%;
       padding: 0.8rem;
       margin-bottom: 1rem;
@@ -68,34 +68,40 @@
   <div class="login-box">
     <h1>Inicia sesión</h1>
     <input type="email" id="email" placeholder="Introduce tu email" />
+    <input type="password" id="password" placeholder="Contraseña" />
     <button onclick="login()">Entrar</button>
     <p style="text-align:center; margin-top: 1rem;">
-  ¿No tienes cuenta? <a href="register.html">Regístrate</a>
-</p>
+      ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+    </p>
     <div id="error" class="error"></div>
   </div>
 
   <script>
     async function login() {
       const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value.trim();
       const errorBox = document.getElementById("error");
       errorBox.textContent = "";
 
-      if (!email.includes("@") || !email.includes(".")) {
-        errorBox.textContent = "Introduce un email válido.";
+      if (!email.includes("@") || !password) {
+        errorBox.textContent = "Introduce email y contraseña válidos.";
         return;
       }
 
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec?email=${encodeURIComponent(email)}`);
+        const res = await fetch("https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec", {
+          method: "POST",
+          body: JSON.stringify({ email, password, action: "login" }),
+          headers: { "Content-Type": "application/json" }
+        });
         const data = await res.json();
-        if (data.exists) {
+        if (data.success) {
           localStorage.setItem("userEmail", email);
           window.location.href = "news.html";
         } else {
-          errorBox.textContent = "Este email no está registrado.";
+          errorBox.textContent = data.message;
         }
-      } catch (error) {
+      } catch (err) {
         errorBox.textContent = "Error de conexión. Inténtalo más tarde.";
       }
     }
