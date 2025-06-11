@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | CiberDomestika</title>
+  <style>
+    body { font-family: sans-serif; background: #f6f6f6; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    .login-box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1); width: 300px; }
+    input { width: 100%; padding: 0.5rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 6px; }
+    button { width: 100%; padding: 0.5rem; background: #111; color: white; border: none; border-radius: 6px; }
+    .error { color: red; font-size: 0.85rem; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Inicia sesión</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+    <div id="error" class="error"></div>
+  </div>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorBox = document.getElementById('error');
+      const res = await fetch('users.json');
+      const users = await res.json();
+
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
+        localStorage.setItem('userEmail', user.email);
+        location.href = 'progreso.html';
+      } else {
+        errorBox.textContent = 'Email o contraseña incorrectos.';
+      }
+    }
+  </script>
+</body>
+</html>
