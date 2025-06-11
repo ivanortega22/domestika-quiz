@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minicurso 2 | CiberDomestika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minicurso 2: Cómo crear contraseñas seguras</h1>
+  </header>
+
+  <main>
+    <div class="card" id="stepCard">
+      <!-- Contenido dinámico -->
+    </div>
+  </main>
+
+  <footer>
+    © 2025 CiberDomestika
+  </footer>
+
+  <script>
+    const steps = [
+      {
+        title: "¿Por qué importa una buena contraseña?",
+        text: "Una contraseña débil es como dejar la puerta abierta. Los atacantes pueden acceder fácilmente a tus cuentas personales o laborales."
+      },
+      {
+        title: "Evita lo obvio",
+        text: "Nunca uses '123456', 'password' o tu fecha de nacimiento. Son las primeras combinaciones que probará un atacante."
+      },
+      {
+        title: "Usa frases complejas",
+        text: "Mejor que una palabra es una frase fácil de recordar pero difícil de adivinar. Ejemplo: 'GatosSaltan2024!'"
+      },
+      {
+        title: "Incluye variedad de caracteres",
+        text: "Combina mayúsculas, minúsculas, números y símbolos para crear contraseñas más robustas. Ejemplo: 'L#maC2*2025'"
+      },
+      {
+        title: "No repitas contraseñas",
+        text: "Si usas la misma contraseña en varias webs, un solo hackeo compromete todo. Usa una diferente para cada cuenta importante."
+      },
+      {
+        title: "Usa un gestor de contraseñas",
+        text: "Estas herramientas generan, almacenan y autocompletan tus contraseñas de forma segura. ¡Solo tendrás que recordar una!"
+      },
+      {
+        title: "¡Bien hecho!",
+        text: "Ahora sabes cómo crear contraseñas seguras. Recuerda: la ciberseguridad empieza contigo. 🔐"
+      }
+    ];
+
+    let currentStep = 0;
+
+    function showStep(index) {
+      const step = steps[index];
+      const card = document.getElementById("stepCard");
+      card.innerHTML = `
+        <h2>${step.title}</h2>
+        <p>${step.text}</p>
+        ${index < steps.length - 1
+          ? '<button onclick="nextStep()">Siguiente</button>'
+          : '<button onclick="location.href=\'minicursos.html\'">Volver al menú</button>'}
+      `;
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    }
+
+    // Iniciar
+    showStep(currentStep);
+  </script>
+</body>
+</html>
