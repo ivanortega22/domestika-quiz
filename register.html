@@ -71,42 +71,24 @@
       const msg = document.getElementById("message");
       msg.textContent = "";
 
-      if (!email.includes("@") || !email.includes(".")) {
-        msg.textContent = "Introduce un email válido.";
-        msg.className = "error";
-        return;
-      }
-
-      if (password.length < 4) {
-        msg.textContent = "La contraseña debe tener al menos 4 caracteres.";
+      if (!email.includes("@") || !email.includes(".") || password.length < 3) {
+        msg.textContent = "Introduce un email válido y una contraseña.";
         msg.className = "error";
         return;
       }
 
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            action: "register",
-            email: email,
-            password: password
-          })
-        });
-
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec?action=register&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
         const data = await res.json();
 
         if (data.success) {
-          msg.textContent = "Registro completado. Ya puedes iniciar sesión.";
+          msg.textContent = "✅ Registro completado. Ya puedes iniciar sesión.";
           msg.className = "success";
         } else {
           msg.textContent = data.message;
           msg.className = "error";
         }
-
-      } catch (error) {
+      } catch {
         msg.textContent = "Error de conexión.";
         msg.className = "error";
       }
