@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minicurso 1 | CiberDomestika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minicurso 1: Cómo detectar correos sospechosos</h1>
+  </header>
+
+  <main>
+    <div class="card" id="stepCard">
+      <!-- El contenido se genera dinámicamente -->
+    </div>
+  </main>
+
+  <footer>
+    © 2025 CiberDomestika
+  </footer>
+
+  <script>
+    const steps = [
+      {
+        title: "¿Qué es un correo sospechoso?",
+        text: "Son mensajes diseñados para engañarte, suplantando la identidad de empresas o personas de confianza para que hagas clic en enlaces maliciosos o entregues información sensible."
+      },
+      {
+        title: "Revisa el remitente",
+        text: "Desconfía si la dirección de correo no coincide exactamente con la empresa real o si tiene caracteres extraños, como 'amaz0n' o 'micros0ft'."
+      },
+      {
+        title: "Sospecha de urgencias",
+        text: "Los mensajes que intentan asustarte ('tu cuenta será bloqueada', 'última oportunidad') buscan que actúes sin pensar. Mantén la calma y no hagas clic sin verificar."
+      },
+      {
+        title: "No descargues archivos dudosos",
+        text: "Evita abrir archivos adjuntos de remitentes desconocidos o inesperados. Pueden contener virus o ransomware."
+      },
+      {
+        title: "Verifica antes de actuar",
+        text: "Si tienes dudas, contacta a la empresa o persona directamente desde su canal oficial. Nunca respondas al correo sospechoso."
+      },
+      {
+        title: "¡Buen trabajo!",
+        text: "Ahora sabes cómo identificar correos sospechosos. Estás un paso más cerca de ser un experto en ciberseguridad. 💪"
+      }
+    ];
+
+    let currentStep = 0;
+
+    function showStep(index) {
+      const step = steps[index];
+      const card = document.getElementById("stepCard");
+      card.innerHTML = `
+        <h2>${step.title}</h2>
+        <p>${step.text}</p>
+        ${index < steps.length - 1
+          ? '<button onclick="nextStep()">Siguiente</button>'
+          : '<button onclick="location.href=\'minicursos.html\'">Volver al menú</button>'}
+      `;
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    }
+
+    // Mostrar el primer paso al cargar
+    showStep(currentStep);
+  </script>
+</body>
+</html>
