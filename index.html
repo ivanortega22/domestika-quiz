@@ -76,35 +76,99 @@
     <div id="error" class="error"></div>
   </div>
 
+  <!-- Mantiene el mismo HTML que te pasé antes, solo cambia el script final -->
+<script>
+  const email = localStorage.getItem("userEmail");
+  if (!email) window.location.href = "index.html";
+</script>
+</head>
+<body>
+  <header>
+    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
+    <div class="nav-bar">
+      <nav>
+        <a href="news.html">NEWS</a>
+        <a href="quiz.html">QUIZ</a>
+        <a href="progreso.html">PROGRESS</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="inicio">
+    <h2>📰 News</h2>
+    <!-- Noticias generadas automáticamente -->
+  </section>
+
+  <footer>
+    © 2025 CiberDomestika. Todos los derechos reservados.
+  </footer>
+
   <script>
-    async function login() {
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value.trim();
-      const errorBox = document.getElementById("error");
-      errorBox.textContent = "";
-
-      if (!email.includes("@") || !password) {
-        errorBox.textContent = "Introduce email y contraseña válidos.";
-        return;
+    const news = [
+      {
+        title: "LummaC2 malware dismantled",
+        text: "An international coalition dismantled the LummaC2 malware, which had infected over 394,000 systems.",
+        link: "https://www.wired.com/story/lumma-stealer-takedown-disrupted"
+      },
+      {
+        title: "Marks & Spencer suffers cyberattack",
+        text: "A breach at Marks & Spencer compromised data of thousands of employees and customers.",
+        link: "https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/"
+      },
+      {
+        title: "Cisco patches critical firewall flaw",
+        text: "Cisco has issued a patch for a critical vulnerability in its ASA firewalls. Immediate update recommended.",
+        link: "https://www.bleepingcomputer.com/news/security/cisco-patches-critical-firewall-flaw/"
+      },
+      {
+        title: "WhatsApp hit by zero-day vulnerability",
+        text: "A zero-day flaw allows attackers to access WhatsApp data. Meta urges users to update immediately.",
+        link: "https://www.securityweek.com/whatsapp-zero-day-vulnerability"
+      },
+      {
+        title: "AI tools now being used in phishing",
+        text: "Hackers are using AI to craft ultra-personalized phishing emails, increasing success rates significantly.",
+        link: "https://www.darkreading.com/endpoint/hackers-using-ai-in-phishing"
+      },
+      {
+        title: "AT&T confirms data breach",
+        text: "AT&T confirms a major breach involving sensitive data of over 70 million current and former users.",
+        link: "https://www.reuters.com/technology/att-confirms-data-breach-2025"
+      },
+      {
+        title: "Google disables apps over malware links",
+        text: "Google Play removed several apps infected with malware stealing banking credentials.",
+        link: "https://www.bleepingcomputer.com/news/security/google-play-removes-malware-apps/"
+      },
+      {
+        title: "North Korean hackers target crypto wallets",
+        text: "Lazarus group linked to new campaign targeting crypto wallet providers with fake job offers.",
+        link: "https://www.zdnet.com/article/lazarus-group-crypto-attacks-2025/"
+      },
+      {
+        title: "Fake browser extensions steal data",
+        text: "Security firms warn about Chrome extensions posing as tools, secretly stealing form inputs.",
+        link: "https://www.thehackernews.com/2025/06/fake-chrome-extensions-data-theft.html"
+      },
+      {
+        title: "Microsoft blocks 1.7 million phishing attempts daily",
+        text: "Microsoft defends its cloud platform by blocking over 1.7M phishing emails daily across Outlook and Teams.",
+        link: "https://blogs.microsoft.com/blog/2025/06/phishing-defense-in-numbers/"
       }
+    ];
 
-      try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbwlG2grUJNi8NB2epsU0mHpvf0bl3A_-neKPxRD5kQNFCT10GIPiWztyGzMz-VgCNxZ/exec", {
-          method: "POST",
-          body: JSON.stringify({ email, password, action: "login" }),
-          headers: { "Content-Type": "application/json" }
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem("userEmail", email);
-          window.location.href = "news.html";
-        } else {
-          errorBox.textContent = data.message;
-        }
-      } catch (err) {
-        errorBox.textContent = "Error de conexión. Inténtalo más tarde.";
-      }
-    }
+    const section = document.getElementById("inicio");
+
+    news.forEach(noticia => {
+      const div = document.createElement("div");
+      div.className = "noticia";
+      div.innerHTML = `
+        <h3>${noticia.title}</h3>
+        <p>${noticia.text}</p>
+        <a href="${noticia.link}" target="_blank">Read more</a>
+      `;
+      section.appendChild(div);
+    });
   </script>
 </body>
 </html>
