@@ -1,141 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>PROGRESS | CiberDomestika</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Tu progreso | CiberDomestika</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #f8f8f8;
-      color: #333;
-    }
-
-    header {
-      position: relative;
-      width: 100%;
-    }
-
-    .header-image {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .nav-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: transparent;
-      z-index: 100;
-    }
-
-    .nav-bar nav a {
-      color: white;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-
-    section#progreso {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    section#progreso h2 {
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    section#progreso h2 img {
-      height: 40px;
-      width: auto;
-    }
-
-    .progress-wrapper {
-      display: flex;
-      justify-content: center;
-    }
-
-    .progress-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      max-width: 100%;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-      border: 1px solid #eee;
-      text-align: center;
-    }
-
-    .progress-card a {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background-color: #000;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.2s ease;
-    }
-
-    .progress-card a:hover {
-      background-color: #333;
-    }
-
-    footer {
-      background: #000;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #fff;
-    }
+    body { font-family: sans-serif; background: #fff; padding: 2rem; }
+    h1 { margin-bottom: 1rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background: #f2f2f2; }
+    #logout { margin-top: 1rem; }
   </style>
 </head>
 <body>
+  <h1>Tu progreso</h1>
+  <div id="user"></div>
+  <table>
+    <thead>
+      <tr><th>Fecha</th><th>Puntos</th><th>Tiempo</th></tr>
+    </thead>
+    <tbody id="results"></tbody>
+  </table>
+  <button id="logout" onclick="logout()">Cerrar sesión</button>
 
-  <header>
-    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
-    <div class="nav-bar">
-      <nav>
-        <a href="index.html">NEWS</a>
-        <a href="quiz.html">QUIZ</a>
-        <a href="progreso.html">PROGRESS</a>
-      </nav>
-    </div>
-  </header>
+  <script>
+    const email = localStorage.getItem('userEmail');
+    if (!email) location.href = 'login.html';
 
-  <section id="progreso">
-    <h2>
-      <img src="assets/icon-domestika.png" alt="Icon">
-      Your progress
-    </h2>
+    document.getElementById('user').textContent = 'Logueado como: ' + email;
 
-    <div class="progress-wrapper">
-      <div class="progress-card">
-        <p>Pulsa el botón para ver tu progreso personalizado:</p>
-        <a href="https://script.google.com/macros/s/AKfycbxqxZzQ0Jv5SLe9jaIwrZPSR_itk44sdl6btoXxaQvRig3rgxa443_mE9UqfEd9Xbxvog/exec" target="_blank">
-          Ver mi progreso
-        </a>
-      </div>
-    </div>
-  </section>
+    async function loadData() {
+      const res = await fetch('users.json');
+      const users = await res.json();
+      const user = users.find(u => u.email === email);
 
-  <footer>
-    © 2025 CiberDomestika. Todos los derechos reservados.
-  </footer>
+      const tbody = document.getElementById('results');
+      tbody.innerHTML = '';
 
+      user.results.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${new Date(r.date).toLocaleString()}</td>
+          <td>${r.score}</td>
+          <td>${r.time} min</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem('userEmail');
+      location.href = 'login.html';
+    }
+
+    loadData();
+  </script>
 </body>
 </html>
