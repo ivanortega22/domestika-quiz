@@ -50,7 +50,6 @@
       padding: 3rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      text-align: center;
     }
 
     section#progreso h2 {
@@ -58,7 +57,6 @@
       margin-bottom: 2rem;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 0.75rem;
     }
 
@@ -67,20 +65,33 @@
       width: auto;
     }
 
-    .btn-progreso {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #111;
-      color: #fff;
-      font-weight: 600;
-      font-size: 1rem;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: background 0.2s ease;
+    .progress-wrapper {
+      display: flex;
+      justify-content: center;
     }
 
-    .btn-progreso:hover {
+    .progress-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 100%;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+      border: 1px solid #eee;
+      text-align: center;
+    }
+
+    .progress-card a {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: #000;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    .progress-card a:hover {
       background-color: #333;
     }
 
@@ -112,15 +123,14 @@
       Your progress
     </h2>
 
-    <p style="font-size: 1rem; margin-bottom: 1.5rem; color: #555;">
-      Consulta tus resultados personalizados pulsando el siguiente botón:
-    </p>
-
-    <a href="https://script.google.com/a/macros/domestika.org/s/AKfycbxqxZzQ0Jv5SLe9jaIwrZPSR_itk44sdl6btoXxaQvRig3rgxa443_mE9UqfEd9Xbxvog/exec"
-       target="_blank"
-       class="btn-progreso">
-      Ver mi progreso →
-    </a>
+    <div class="progress-wrapper">
+      <div class="progress-card">
+        <p>Pulsa el botón para ver tu progreso personalizado:</p>
+        <a href="https://script.google.com/macros/s/AKfycbxqxZzQ0Jv5SLe9jaIwrZPSR_itk44sdl6btoXxaQvRig3rgxa443_mE9UqfEd9Xbxvog/exec" target="_blank">
+          Ver mi progreso
+        </a>
+      </div>
+    </div>
   </section>
 
   <footer>
