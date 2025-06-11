@@ -237,6 +237,7 @@
     let lives = 3;
     let timerInterval;
     let gameOver = false;
+    let email = '';
 
     function loadQuestion() {
       const q = questions[current];
@@ -291,11 +292,24 @@
         <p>❤️ Lives: ${lives}</p>
         ${message}
       `;
+      sendData();
       gameOver = true;
     }
 
+    function sendData() {
+      const formData = new FormData();
+      formData.append('entry.69344473', email); // email
+      formData.append('entry.1881670432', score); // score
+      formData.append('entry.1352149982', time); // time
+      fetch('https://docs.google.com/forms/u/0/d/1SiorvIfG-thy0tuoCo48R84GyAqiu9InZxwEVCncQQQ/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+    }
+
     function startGame() {
-      const email = document.getElementById('email').value;
+      email = document.getElementById('email').value;
       if (!email || !email.includes('@')) {
         alert('Introduce un email válido.');
         return;
