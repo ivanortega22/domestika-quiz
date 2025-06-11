@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>NEWS | CiberDomestika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+    }
+
+    header {
+      position: relative;
+      width: 100%;
+    }
+
+    .header-image {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: transparent;
+      z-index: 100;
+    }
+
+    .nav-bar nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    section#inicio {
+      padding: 3rem 2rem;
+      min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    section#inicio h2 {
+      grid-column: 1 / -1;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .noticia {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .noticia:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .noticia h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .noticia p {
+      margin-bottom: 1rem;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .noticia a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 10px 16px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .noticia a:hover {
+      background: #333;
+    }
+
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="assets/ciberdomestika-header.png" alt="CiberDomestika Banner" class="header-image">
+    <div class="nav-bar">
+      <nav>
+        <a href="news.html">NEWS</a>
+        <a href="quiz.html">QUIZ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="inicio">
+    <h2>📰 Noticias de ciberseguridad</h2>
+
+    <div class="noticia">
+      <h3>LummaC2 malware dismantled</h3>
+      <p>Una coalición internacional ha desmantelado el malware LummaC2, utilizado para robar datos de más de 394.000 sistemas.</p>
+      <a href="https://www.wired.com/story/lumma-stealer-takedown-disrupted" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Ataque a Marks & Spencer</h3>
+      <p>La cadena británica Marks & Spencer sufrió un ciberataque que comprometió datos personales de empleados y clientes.</p>
+      <a href="https://www.thesun.co.uk/money/35066783/website-down-cyber-attack/" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>El FBI neutraliza red de phishing</h3>
+      <p>El FBI ha cerrado una red que operaba más de 60 dominios falsos de bancos y servicios públicos para estafas de phishing.</p>
+      <a href="https://www.cisa.gov/news-events/alerts/2024/05/21/fbi-disrupts-phishing-ring" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Multa a Meta por GDPR</h3>
+      <p>Meta ha sido multada con 1.200 millones de euros por violaciones del Reglamento General de Protección de Datos en Europa.</p>
+      <a href="https://www.bbc.com/news/technology-65672160" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Estafa de correos falsos de la DGT</h3>
+      <p>Se han detectado campañas masivas de correos fraudulentos haciéndose pasar por la Dirección General de Tráfico en España.</p>
+      <a href="https://www.incibe.es/protege-tu-empresa/blog/correos-falsos-dgt" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Filtración de datos de Ticketmaster</h3>
+      <p>Un grupo de hackers afirma haber robado 560 millones de datos de usuarios de Ticketmaster y estar vendiéndolos online.</p>
+      <a href="https://www.reuters.com/technology/ticketmaster-breach-hackers-sell-user-data-2024-05-31" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Google bloquea 2.000 apps maliciosas</h3>
+      <p>Google ha eliminado más de 2.000 aplicaciones de la Play Store que contenían malware o spyware oculto.</p>
+      <a href="https://blog.google/threat-analysis-group/malicious-apps-play-store-2024/" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Hospital de París sufre ransomware</h3>
+      <p>Un hospital público de París ha sufrido un ataque de ransomware que dejó inactivos sus sistemas informáticos durante días.</p>
+      <a href="https://www.france24.com/en/live-news/20240524-paris-hospital-hit-by-cyberattack" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>Detectado nuevo troyano bancario</h3>
+      <p>Investigadores han alertado sobre un nuevo troyano bancario que roba credenciales a través de apps de Android infectadas.</p>
+      <a href="https://www.zdnet.com/article/android-banking-trojan-disguised-as-app-update/" target="_blank">Leer más</a>
+    </div>
+
+    <div class="noticia">
+      <h3>España refuerza seguridad en elecciones</h3>
+      <p>El Gobierno español ha reforzado los protocolos de ciberseguridad de cara a las elecciones generales.</p>
+      <a href="https://elpais.com/espana/2025-05-20/el-gobierno-refuerza-la-ciberseguridad-en-los-comicios.html" target="_blank">Leer más</a>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2025 CiberDomestika. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>
