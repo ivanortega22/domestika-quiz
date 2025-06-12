@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Minicurso 1 | CiberDomestika</title>
+  <title>Minicurso 1 | Seguridad Básica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -15,14 +15,12 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    header {
+    header, footer {
       background: black;
       color: white;
       padding: 1rem 2rem;
       text-align: center;
     }
-
     main {
       flex: 1;
       display: flex;
@@ -30,27 +28,23 @@
       align-items: center;
       padding: 2rem;
     }
-
     .card {
       background: white;
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
       text-align: center;
       transition: all 0.3s ease;
     }
-
     .card h2 {
       margin-bottom: 1rem;
     }
-
     .card p {
       font-size: 1.1rem;
       line-height: 1.6;
     }
-
     button {
       margin-top: 2rem;
       padding: 12px 24px;
@@ -61,86 +55,89 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     button:hover {
       background: #333;
     }
-
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
+    ul li {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background: #eee;
+      border-radius: 8px;
+      cursor: pointer;
+      list-style: none;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Minicurso 1: Cómo detectar correos sospechosos</h1>
+    <h1>Minicurso 1: Seguridad Básica</h1>
   </header>
-
   <main>
-    <div class="card" id="stepCard">
-      <!-- El contenido se genera dinámicamente -->
-    </div>
+    <div class="card" id="contentBox"></div>
   </main>
-
   <footer>
     © 2025 CiberDomestika
   </footer>
-
   <script>
     const steps = [
       {
-        title: "¿Qué es un correo sospechoso?",
-        text: "Son mensajes diseñados para engañarte, suplantando la identidad de empresas o personas de confianza para que hagas clic en enlaces maliciosos o entregues información sensible."
+        title: "¿Qué es la seguridad digital?",
+        text: "Es el conjunto de medidas para proteger tu información y tus dispositivos."
       },
       {
-        title: "Revisa el remitente",
-        text: "Desconfía si la dirección de correo no coincide exactamente con la empresa real o si tiene caracteres extraños, como 'amaz0n' o 'micros0ft'."
+        title: "¿Qué riesgos existen?",
+        text: "Desde malware y robo de datos hasta suplantación de identidad."
       },
       {
-        title: "Sospecha de urgencias",
-        text: "Los mensajes que intentan asustarte ('tu cuenta será bloqueada', 'última oportunidad') buscan que actúes sin pensar. Mantén la calma y no hagas clic sin verificar."
+        title: "¿Cuál de estas situaciones es riesgosa?",
+        question: true,
+        options: [
+          { text: "Usar Wi-Fi pública sin VPN", correct: true },
+          { text: "Tener antivirus actualizado", correct: false },
+          { text: "Bloquear el móvil con huella", correct: false }
+        ]
       },
       {
-        title: "No descargues archivos dudosos",
-        text: "Evita abrir archivos adjuntos de remitentes desconocidos o inesperados. Pueden contener virus o ransomware."
+        title: "Consejo práctico",
+        text: "Activa siempre el doble factor de autenticación."
       },
       {
-        title: "Verifica antes de actuar",
-        text: "Si tienes dudas, contacta a la empresa o persona directamente desde su canal oficial. Nunca respondas al correo sospechoso."
-      },
-      {
-        title: "¡Buen trabajo!",
-        text: "Ahora sabes cómo identificar correos sospechosos. Estás un paso más cerca de ser un experto en ciberseguridad. 💪"
+        title: "¡Minicurso completado!",
+        text: "Has aprendido los básicos de la seguridad digital. ✔️",
+        end: true
       }
     ];
 
-    let currentStep = 0;
+    let current = 0;
 
-    function showStep(index) {
-      const step = steps[index];
-      const card = document.getElementById("stepCard");
-      card.innerHTML = `
-        <h2>${step.title}</h2>
-        <p>${step.text}</p>
-        ${index < steps.length - 1
-          ? '<button onclick="nextStep()">Siguiente</button>'
-          : '<button onclick="location.href=\'minicursos.html\'">Volver al menú</button>'}
-      `;
-    }
+    function renderStep() {
+      const box = document.getElementById('contentBox');
+      const step = steps[current];
 
-    function nextStep() {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        showStep(currentStep);
+      if (step.question) {
+        box.innerHTML = `<h2>${step.title}</h2><p>Selecciona una opción:</p>` +
+          step.options.map((opt, i) => `<ul><li onclick="checkAnswer(${i}, ${opt.correct})">${opt.text}</li></ul>`).join('');
+      } else {
+        box.innerHTML = `<h2>${step.title}</h2><p>${step.text}</p>` +
+          (step.end ? '<button onclick="window.location.href=\'minicursos.html\'">Volver</button>' : '<button onclick="nextStep()">Siguiente</button>');
       }
     }
 
-    // Mostrar el primer paso al cargar
-    showStep(currentStep);
+    function nextStep() {
+      if (current < steps.length - 1) {
+        current++;
+        renderStep();
+      }
+    }
+
+    function checkAnswer(i, correct) {
+      const lis = document.querySelectorAll('li');
+      lis.forEach(li => li.style.pointerEvents = 'none');
+      lis[i].style.backgroundColor = correct ? '#c8e6c9' : '#ffcdd2';
+      setTimeout(() => nextStep(), 1000);
+    }
+
+    renderStep();
   </script>
 </body>
 </html>
