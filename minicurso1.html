@@ -98,44 +98,26 @@
 
   <script>
     const steps = [
-      {
-        title: "¿Qué es la seguridad digital?",
-        text: "Es el conjunto de prácticas que protegen tus datos y dispositivos frente a amenazas online como virus, fraudes o accesos no autorizados."
-      },
-      {
-        title: "Actualiza tus dispositivos",
-        text: "Mantener el sistema operativo y las apps actualizadas cierra vulnerabilidades que los atacantes pueden explotar."
-      },
-      {
-        title: "Cuida tus redes Wi-Fi",
-        text: "Evita redes públicas abiertas y protege tu Wi-Fi doméstico con contraseña fuerte y WPA2 o superior."
-      },
-      {
-        title: "Ten cuidado con los enlaces",
-        text: "No hagas clic en enlaces de correos o mensajes sospechosos, aunque parezcan venir de fuentes fiables."
-      },
-      {
-        title: "Pregunta interactiva",
-        text: "¿Cuál de estas situaciones es riesgosa?",
-        options: [
-          "Conectarse a una red Wi-Fi pública sin contraseña",
-          "Usar una VPN en el trabajo",
-          "Abrir un documento desde tu propio Drive"
-        ],
-        correctIndex: 0
-      },
-      {
-        title: "Elige contraseñas seguras",
-        text: "Usa combinaciones de letras, números y símbolos. No reutilices contraseñas en diferentes sitios."
-      },
-      {
-        title: "Activa el doble factor",
-        text: "El doble factor (2FA) añade una capa extra de seguridad a tus cuentas, como un código enviado por SMS."
-      },
-      {
-        title: "¡Buen trabajo!",
-        text: "Has completado el minicurso. ¡Sigue aprendiendo y mantente alerta en el mundo digital!"
-      }
+      { title: "¿Qué es la seguridad digital?", text: "Conjunto de prácticas para proteger datos y dispositivos frente a amenazas digitales." },
+      { title: "Actualiza tus dispositivos", text: "Instala actualizaciones regularmente para cerrar vulnerabilidades." },
+      { title: "Cuida tus redes Wi-Fi", text: "Evita redes públicas sin protección y asegura tu red doméstica con una buena contraseña." },
+      { title: "Cuidado con los enlaces", text: "Evita hacer clic en enlaces sospechosos o de remitentes desconocidos." },
+      { title: "Pregunta interactiva", text: "¿Cuál de estas situaciones es riesgosa?", options: ["Conectarse a red Wi-Fi pública", "Usar VPN", "Documento propio en Drive"], correctIndex: 0 },
+      { title: "Contraseñas seguras", text: "Usa contraseñas únicas, largas y con variedad de caracteres." },
+      { title: "Gestores de contraseñas", text: "Son herramientas que te ayudan a crear y guardar contraseñas seguras." },
+      { title: "Evita repetir contraseñas", text: "Una contraseña por cada sitio importante para evitar riesgos." },
+      { title: "Doble autenticación", text: "Agrega una capa extra de seguridad más allá de la contraseña." },
+      { title: "Pregunta interactiva", text: "¿Qué combinación es más segura?", options: ["Hola123", "Verano2023", "T7g$!dLp!9"], correctIndex: 2 },
+      { title: "Phishing: qué es", text: "Es una técnica de engaño para robar información personal o financiera." },
+      { title: "Evita el phishing", text: "Nunca compartas datos sensibles desde correos o webs no verificadas." },
+      { title: "Revisa las URLs", text: "Verifica que las webs sean seguras (https://) y sin errores ortográficos." },
+      { title: "Bloquea tu dispositivo", text: "Siempre bloquea la pantalla al dejarlo solo, incluso por poco tiempo." },
+      { title: "Pregunta interactiva", text: "¿Cuál es un ejemplo de phishing?", options: ["Correo de banco con errores y enlace extraño", "Mensaje de un amigo", "Newsletter mensual"], correctIndex: 0 },
+      { title: "Desconfía del sentido de urgencia", text: "Los atacantes suelen meter presión para que actúes rápido sin pensar." },
+      { title: "Configura alertas", text: "Activa notificaciones de acceso en cuentas sensibles como email y banca." },
+      { title: "No instales apps dudosas", text: "Descarga apps solo desde tiendas oficiales y revisa opiniones." },
+      { title: "Haz copias de seguridad", text: "Guarda tus archivos importantes en la nube o disco externo." },
+      { title: "¡Bien hecho!", text: "Has completado el minicurso. ¡Sigue aprendiendo y protege tu información!" }
     ];
 
     let currentStep = 0;
@@ -149,9 +131,7 @@
           <h2>${step.title}</h2>
           <p>${step.text}</p>
           <div class="options">
-            ${step.options
-              .map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`)
-              .join('')}
+            ${step.options.map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`).join('')}
           </div>
         `;
       } else {
@@ -169,7 +149,7 @@
         currentStep++;
         showStep(currentStep);
       } else {
-        alert('❌ Incorrecto. Intenta de nuevo.');
+        alert('❌ Incorrecto. Inténtalo de nuevo.');
       }
     }
 
@@ -182,7 +162,6 @@
       }
     }
 
-    // Iniciar
     showStep(currentStep);
   </script>
 </body>
