@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Minicurso 1 | Seguridad Básica</title>
+  <title>Minicurso 1 | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -15,12 +15,14 @@
       flex-direction: column;
       min-height: 100vh;
     }
-    header, footer {
+
+    header {
       background: black;
       color: white;
       padding: 1rem 2rem;
       text-align: center;
     }
+
     main {
       flex: 1;
       display: flex;
@@ -28,23 +30,27 @@
       align-items: center;
       padding: 2rem;
     }
+
     .card {
       background: white;
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      max-width: 700px;
+      max-width: 600px;
       width: 100%;
       text-align: center;
       transition: all 0.3s ease;
     }
+
     .card h2 {
       margin-bottom: 1rem;
     }
+
     .card p {
       font-size: 1.1rem;
       line-height: 1.6;
     }
+
     button {
       margin-top: 2rem;
       padding: 12px 24px;
@@ -55,16 +61,23 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     button:hover {
       background: #333;
     }
-    ul li {
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      background: #eee;
-      border-radius: 8px;
-      cursor: pointer;
-      list-style: none;
+
+    .options button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 80%;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -72,72 +85,105 @@
   <header>
     <h1>Minicurso 1: Seguridad Básica</h1>
   </header>
+
   <main>
-    <div class="card" id="contentBox"></div>
+    <div class="card" id="stepCard">
+      <!-- Contenido dinámico -->
+    </div>
   </main>
+
   <footer>
     © 2025 CiberDomestika
   </footer>
+
   <script>
     const steps = [
       {
         title: "¿Qué es la seguridad digital?",
-        text: "Es el conjunto de medidas para proteger tu información y tus dispositivos."
+        text: "Es el conjunto de prácticas que protegen tus datos y dispositivos frente a amenazas online como virus, fraudes o accesos no autorizados."
       },
       {
-        title: "¿Qué riesgos existen?",
-        text: "Desde malware y robo de datos hasta suplantación de identidad."
+        title: "Actualiza tus dispositivos",
+        text: "Mantener el sistema operativo y las apps actualizadas cierra vulnerabilidades que los atacantes pueden explotar."
       },
       {
-        title: "¿Cuál de estas situaciones es riesgosa?",
-        question: true,
+        title: "Cuida tus redes Wi-Fi",
+        text: "Evita redes públicas abiertas y protege tu Wi-Fi doméstico con contraseña fuerte y WPA2 o superior."
+      },
+      {
+        title: "Ten cuidado con los enlaces",
+        text: "No hagas clic en enlaces de correos o mensajes sospechosos, aunque parezcan venir de fuentes fiables."
+      },
+      {
+        title: "Pregunta interactiva",
+        text: "¿Cuál de estas situaciones es riesgosa?",
         options: [
-          { text: "Usar Wi-Fi pública sin VPN", correct: true },
-          { text: "Tener antivirus actualizado", correct: false },
-          { text: "Bloquear el móvil con huella", correct: false }
-        ]
+          "Conectarse a una red Wi-Fi pública sin contraseña",
+          "Usar una VPN en el trabajo",
+          "Abrir un documento desde tu propio Drive"
+        ],
+        correctIndex: 0
       },
       {
-        title: "Consejo práctico",
-        text: "Activa siempre el doble factor de autenticación."
+        title: "Elige contraseñas seguras",
+        text: "Usa combinaciones de letras, números y símbolos. No reutilices contraseñas en diferentes sitios."
       },
       {
-        title: "¡Minicurso completado!",
-        text: "Has aprendido los básicos de la seguridad digital. ✔️",
-        end: true
+        title: "Activa el doble factor",
+        text: "El doble factor (2FA) añade una capa extra de seguridad a tus cuentas, como un código enviado por SMS."
+      },
+      {
+        title: "¡Buen trabajo!",
+        text: "Has completado el minicurso. ¡Sigue aprendiendo y mantente alerta en el mundo digital!"
       }
     ];
 
-    let current = 0;
+    let currentStep = 0;
 
-    function renderStep() {
-      const box = document.getElementById('contentBox');
-      const step = steps[current];
+    function showStep(index) {
+      const card = document.getElementById("stepCard");
+      const step = steps[index];
 
-      if (step.question) {
-        box.innerHTML = `<h2>${step.title}</h2><p>Selecciona una opción:</p>` +
-          step.options.map((opt, i) => `<ul><li onclick="checkAnswer(${i}, ${opt.correct})">${opt.text}</li></ul>`).join('');
+      if (step.options) {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <div class="options">
+            ${step.options
+              .map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`)
+              .join('')}
+          </div>
+        `;
       } else {
-        box.innerHTML = `<h2>${step.title}</h2><p>${step.text}</p>` +
-          (step.end ? '<button onclick="window.location.href=\'minicursos.html\'">Volver</button>' : '<button onclick="nextStep()">Siguiente</button>');
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <button onclick="nextStep()">Siguiente</button>
+        `;
+      }
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        alert('✅ ¡Correcto!');
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        alert('❌ Incorrecto. Intenta de nuevo.');
       }
     }
 
     function nextStep() {
-      if (current < steps.length - 1) {
-        current++;
-        renderStep();
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        location.href = 'minicursos.html';
       }
     }
 
-    function checkAnswer(i, correct) {
-      const lis = document.querySelectorAll('li');
-      lis.forEach(li => li.style.pointerEvents = 'none');
-      lis[i].style.backgroundColor = correct ? '#c8e6c9' : '#ffcdd2';
-      setTimeout(() => nextStep(), 1000);
-    }
-
-    renderStep();
+    // Iniciar
+    showStep(currentStep);
   </script>
 </body>
 </html>
