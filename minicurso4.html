@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minicourse 3 | CiberDomestika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .options button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 80%;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minicourse 3: Phishing Awareness</h1>
+  </header>
+
+  <main>
+    <div class="card" id="stepCard">
+      <!-- Dynamic content -->
+    </div>
+  </main>
+
+  <footer>
+    © 2025 CiberDomestika
+  </footer>
+
+  <script>
+    const steps = [
+      { title: "Introduction to Phishing", text: "Phishing is a method attackers use to trick you into revealing sensitive information." },
+      { title: "Types of Phishing", text: "Email, SMS, phone calls, and fake websites are common phishing methods." },
+      { title: "Spotting Fake Emails", text: "Check sender address, spelling errors, and strange links." },
+      { title: "Interactive question", text: "Which one is a suspicious email?", options: ["support@paypal.com", "secure-paypal@security-alerts.com", "help@paypal.com"], correctIndex: 1 },
+      { title: "Check the URL", text: "Hover over links to see if they go to the expected website." },
+      { title: "Interactive question", text: "Which link is suspicious?", options: ["https://paypal.com/login", "https://paypa1.com/login", "https://paypal.com/help"], correctIndex: 1 },
+      { title: "Don't trust urgent language", text: "Phrases like 'act now!' or 'your account will be closed' are red flags." },
+      { title: "Interactive question", text: "Which message is suspicious?", options: ["Update your profile at your convenience", "Your account will be deleted in 1 hour", "Weekly newsletter"], correctIndex: 1 },
+      { title: "Attachments can be dangerous", text: "Avoid opening unexpected attachments from unknown senders." },
+      { title: "Interactive question", text: "Which attachment is risky?", options: ["invoice.pdf", "update.exe", "terms.txt"], correctIndex: 1 },
+      { title: "Use official channels", text: "When in doubt, visit the website directly by typing the address." },
+      { title: "Report phishing attempts", text: "Use your email provider's 'Report phishing' feature." },
+      { title: "Interactive question", text: "Where should you report a phishing email?", options: ["To a friend", "Click unsubscribe", "Mark as phishing"], correctIndex: 2 },
+      { title: "Educate your team", text: "Phishing awareness should be shared within your organization." },
+      { title: "Two-factor authentication", text: "This adds protection even if credentials are stolen." },
+      { title: "Interactive question", text: "What does 2FA protect you from?", options: ["Losing your phone", "Being hacked if your password is stolen", "Battery drain"], correctIndex: 1 },
+      { title: "Don't reuse passwords", text: "Using unique passwords prevents attackers from accessing multiple accounts." },
+      { title: "Phishing vs. Spam", text: "Spam is annoying, but phishing is dangerous." },
+      { title: "Test yourself regularly", text: "Use simulations or quizzes to reinforce learning." },
+      { title: "Great job!", text: "You've completed this minicourse. Stay vigilant and spread awareness!" }
+    ];
+
+    let currentStep = 0;
+
+    function showStep(index) {
+      const card = document.getElementById("stepCard");
+      const step = steps[index];
+
+      if (step.options) {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <div class="options">
+            ${step.options.map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`).join('')}
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <button onclick="nextStep()">Next</button>
+        `;
+      }
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        alert('✅ Correct!');
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        alert('❌ Incorrect. Try again.');
+      }
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        location.href = 'minicursos.html';
+      }
+    }
+
+    showStep(currentStep);
+  </script>
+</body>
+</html>
