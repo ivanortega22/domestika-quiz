@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Minicurso 1 | CiberDomestika</title>
+  <title>Minicourse 1 | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -83,12 +83,12 @@
 </head>
 <body>
   <header>
-    <h1>Minicurso 1: Seguridad Básica</h1>
+    <h1>Minicourse 1: Basic Security</h1>
   </header>
 
   <main>
     <div class="card" id="stepCard">
-      <!-- Contenido dinámico -->
+      <!-- Dynamic content -->
     </div>
   </main>
 
@@ -98,26 +98,26 @@
 
   <script>
     const steps = [
-      { title: "¿Qué es la seguridad digital?", text: "Conjunto de prácticas para proteger datos y dispositivos frente a amenazas digitales." },
-      { title: "Actualiza tus dispositivos", text: "Instala actualizaciones regularmente para cerrar vulnerabilidades." },
-      { title: "Cuida tus redes Wi-Fi", text: "Evita redes públicas sin protección y asegura tu red doméstica con una buena contraseña." },
-      { title: "Cuidado con los enlaces", text: "Evita hacer clic en enlaces sospechosos o de remitentes desconocidos." },
-      { title: "Pregunta interactiva", text: "¿Cuál de estas situaciones es riesgosa?", options: ["Conectarse a red Wi-Fi pública", "Usar VPN", "Documento propio en Drive"], correctIndex: 0 },
-      { title: "Contraseñas seguras", text: "Usa contraseñas únicas, largas y con variedad de caracteres." },
-      { title: "Gestores de contraseñas", text: "Son herramientas que te ayudan a crear y guardar contraseñas seguras." },
-      { title: "Evita repetir contraseñas", text: "Una contraseña por cada sitio importante para evitar riesgos." },
-      { title: "Doble autenticación", text: "Agrega una capa extra de seguridad más allá de la contraseña." },
-      { title: "Pregunta interactiva", text: "¿Qué combinación es más segura?", options: ["Hola123", "Verano2023", "T7g$!dLp!9"], correctIndex: 2 },
-      { title: "Phishing: qué es", text: "Es una técnica de engaño para robar información personal o financiera." },
-      { title: "Evita el phishing", text: "Nunca compartas datos sensibles desde correos o webs no verificadas." },
-      { title: "Revisa las URLs", text: "Verifica que las webs sean seguras (https://) y sin errores ortográficos." },
-      { title: "Bloquea tu dispositivo", text: "Siempre bloquea la pantalla al dejarlo solo, incluso por poco tiempo." },
-      { title: "Pregunta interactiva", text: "¿Cuál es un ejemplo de phishing?", options: ["Correo de banco con errores y enlace extraño", "Mensaje de un amigo", "Newsletter mensual"], correctIndex: 0 },
-      { title: "Desconfía del sentido de urgencia", text: "Los atacantes suelen meter presión para que actúes rápido sin pensar." },
-      { title: "Configura alertas", text: "Activa notificaciones de acceso en cuentas sensibles como email y banca." },
-      { title: "No instales apps dudosas", text: "Descarga apps solo desde tiendas oficiales y revisa opiniones." },
-      { title: "Haz copias de seguridad", text: "Guarda tus archivos importantes en la nube o disco externo." },
-      { title: "¡Bien hecho!", text: "Has completado el minicurso. ¡Sigue aprendiendo y protege tu información!" }
+      { title: "What is digital security?", text: "A set of practices to protect data and devices from digital threats." },
+      { title: "Update your devices", text: "Install updates regularly to patch vulnerabilities." },
+      { title: "Secure your Wi-Fi networks", text: "Avoid unprotected public networks and secure your home network with a strong password." },
+      { title: "Be careful with links", text: "Avoid clicking on suspicious links or from unknown senders." },
+      { title: "Interactive question", text: "Which of these situations is risky?", options: ["Connecting to a public Wi-Fi network", "Using a VPN", "Accessing your own document in Drive"], correctIndex: 0 },
+      { title: "Strong passwords", text: "Use unique, long passwords with a mix of characters." },
+      { title: "Password managers", text: "These tools help you generate and store secure passwords." },
+      { title: "Avoid reusing passwords", text: "Use a different password for each important account to reduce risks." },
+      { title: "Two-factor authentication", text: "Adds an extra layer of security beyond just the password." },
+      { title: "Interactive question", text: "Which password is more secure?", options: ["Hola123", "Summer2023", "T7g$!dLp!9"], correctIndex: 2 },
+      { title: "What is phishing?", text: "A technique used to trick people into giving up personal or financial information." },
+      { title: "Avoid phishing", text: "Never share sensitive data from unverified emails or websites." },
+      { title: "Check URLs", text: "Make sure websites are secure (https://) and have no spelling errors." },
+      { title: "Lock your device", text: "Always lock your screen when stepping away, even briefly." },
+      { title: "Interactive question", text: "Which is an example of phishing?", options: ["Email from a bank with typos and a strange link", "Message from a friend", "Monthly newsletter"], correctIndex: 0 },
+      { title: "Beware of urgency", text: "Attackers often create a sense of urgency to make you act without thinking." },
+      { title: "Set up alerts", text: "Activate access notifications on sensitive accounts like email and banking." },
+      { title: "Don't install sketchy apps", text: "Only download apps from official stores and check reviews." },
+      { title: "Back up your data", text: "Store important files in the cloud or on an external drive." },
+      { title: "Well done!", text: "You've completed the minicourse. Keep learning and stay protected!" }
     ];
 
     let currentStep = 0;
@@ -138,18 +138,18 @@
         card.innerHTML = `
           <h2>${step.title}</h2>
           <p>${step.text}</p>
-          <button onclick="nextStep()">Siguiente</button>
+          <button onclick="nextStep()">Next</button>
         `;
       }
     }
 
     function checkAnswer(selected, correct) {
       if (selected === correct) {
-        alert('✅ ¡Correcto!');
+        alert('✅ Correct!');
         currentStep++;
         showStep(currentStep);
       } else {
-        alert('❌ Incorrecto. Inténtalo de nuevo.');
+        alert('❌ Incorrect. Try again.');
       }
     }
 
