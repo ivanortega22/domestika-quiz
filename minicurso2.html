@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Minicurso 2 | CiberDomestika</title>
+  <title>Minicourse 2 | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -66,6 +66,12 @@
       background: #333;
     }
 
+    .options button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 80%;
+    }
+
     footer {
       background: #000;
       color: #fff;
@@ -77,12 +83,12 @@
 </head>
 <body>
   <header>
-    <h1>Minicurso 2: Cómo crear contraseñas seguras</h1>
+    <h1>Minicourse 2: Advanced Cyber Hygiene</h1>
   </header>
 
   <main>
     <div class="card" id="stepCard">
-      <!-- Contenido dinámico -->
+      <!-- Dynamic content -->
     </div>
   </main>
 
@@ -92,58 +98,70 @@
 
   <script>
     const steps = [
-      {
-        title: "¿Por qué importa una buena contraseña?",
-        text: "Una contraseña débil es como dejar la puerta abierta. Los atacantes pueden acceder fácilmente a tus cuentas personales o laborales."
-      },
-      {
-        title: "Evita lo obvio",
-        text: "Nunca uses '123456', 'password' o tu fecha de nacimiento. Son las primeras combinaciones que probará un atacante."
-      },
-      {
-        title: "Usa frases complejas",
-        text: "Mejor que una palabra es una frase fácil de recordar pero difícil de adivinar. Ejemplo: 'GatosSaltan2024!'"
-      },
-      {
-        title: "Incluye variedad de caracteres",
-        text: "Combina mayúsculas, minúsculas, números y símbolos para crear contraseñas más robustas. Ejemplo: 'L#maC2*2025'"
-      },
-      {
-        title: "No repitas contraseñas",
-        text: "Si usas la misma contraseña en varias webs, un solo hackeo compromete todo. Usa una diferente para cada cuenta importante."
-      },
-      {
-        title: "Usa un gestor de contraseñas",
-        text: "Estas herramientas generan, almacenan y autocompletan tus contraseñas de forma segura. ¡Solo tendrás que recordar una!"
-      },
-      {
-        title: "¡Bien hecho!",
-        text: "Ahora sabes cómo crear contraseñas seguras. Recuerda: la ciberseguridad empieza contigo. 🔐"
-      }
+      { title: "Welcome to Advanced Cyber Hygiene", text: "Let's explore deeper strategies to stay safe online." },
+      { title: "Recognize social engineering", text: "Be aware of manipulative tactics used to gain your trust." },
+      { title: "Interactive", text: "Which is a social engineering attempt?", options: ["A popup asking to update software", "A colleague asking for your password", "An email from your ISP"], correctIndex: 1 },
+      { title: "Avoid shoulder surfing", text: "Don't type passwords when someone might be watching." },
+      { title: "Use privacy screens", text: "Especially in public places, to prevent visual hacking." },
+      { title: "Interactive", text: "What helps protect you in a cafe?", options: ["Sitting by the window", "Privacy screen", "Loud music"], correctIndex: 1 },
+      { title: "Lock down your accounts", text: "Review privacy settings regularly on all platforms." },
+      { title: "Secure file sharing", text: "Use encrypted platforms when sharing sensitive documents." },
+      { title: "Interactive", text: "Which is most secure?", options: ["Email attachment", "Google Drive", "Encrypted zip"], correctIndex: 2 },
+      { title: "Don't overshare online", text: "Limit personal details on public platforms." },
+      { title: "Recognize deepfakes", text: "Videos can be manipulated to show fake realities." },
+      { title: "Interactive", text: "Which could be a deepfake warning sign?", options: ["Odd blinking", "Clear audio", "Normal background"], correctIndex: 0 },
+      { title: "Beware of QR codes", text: "They can link to malicious websites." },
+      { title: "Interactive", text: "Best QR practice?", options: ["Scan immediately", "Check source", "Ignore all"], correctIndex: 1 },
+      { title: "Use firewall and antivirus", text: "Essential protection tools for every device." },
+      { title: "Control app permissions", text: "Revoke access to mic, camera, or location if not needed." },
+      { title: "Interactive", text: "What should you do with unused apps?", options: ["Keep them", "Reinstall later", "Delete them"], correctIndex: 2 },
+      { title: "Encrypt your data", text: "Ensure stored data is encrypted, especially on portable drives." },
+      { title: "Avoid public charging stations", text: "Juice jacking can compromise your device." },
+      { title: "Congrats!", text: "You've completed the advanced minicourse. Great job!" }
     ];
 
     let currentStep = 0;
 
     function showStep(index) {
-      const step = steps[index];
       const card = document.getElementById("stepCard");
-      card.innerHTML = `
-        <h2>${step.title}</h2>
-        <p>${step.text}</p>
-        ${index < steps.length - 1
-          ? '<button onclick="nextStep()">Siguiente</button>'
-          : '<button onclick="location.href=\'minicursos.html\'">Volver al menú</button>'}
-      `;
+      const step = steps[index];
+
+      if (step.options) {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <div class="options">
+            ${step.options.map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`).join('')}
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <button onclick="nextStep()">Next</button>
+        `;
+      }
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        alert('✅ Correct!');
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        alert('❌ Incorrect. Try again.');
+      }
     }
 
     function nextStep() {
       if (currentStep < steps.length - 1) {
         currentStep++;
         showStep(currentStep);
+      } else {
+        location.href = 'minicursos.html';
       }
     }
 
-    // Iniciar
     showStep(currentStep);
   </script>
 </body>
