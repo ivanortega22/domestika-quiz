@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Minicurso 3 | CiberDomestika</title>
+  <title>Minicourse 3 | CiberDomestika</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -66,6 +66,12 @@
       background: #333;
     }
 
+    .options button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 80%;
+    }
+
     footer {
       background: #000;
       color: #fff;
@@ -77,12 +83,12 @@
 </head>
 <body>
   <header>
-    <h1>Minicurso 3: La importancia de actualizar tus dispositivos</h1>
+    <h1>Minicourse 3: Phishing Attacks</h1>
   </header>
 
   <main>
     <div class="card" id="stepCard">
-      <!-- Contenido dinámico -->
+      <!-- Dynamic content -->
     </div>
   </main>
 
@@ -92,54 +98,70 @@
 
   <script>
     const steps = [
-      {
-        title: "¿Por qué actualizar es importante?",
-        text: "Las actualizaciones corrigen vulnerabilidades que los atacantes pueden explotar. No actualizarlas te deja expuesto."
-      },
-      {
-        title: "Actualizaciones de seguridad",
-        text: "Muchas actualizaciones no cambian la apariencia del sistema, pero sí lo hacen más seguro contra amenazas recientes."
-      },
-      {
-        title: "¿Qué dispositivos debo actualizar?",
-        text: "No solo el móvil: ordenadores, tabletas, routers, cámaras inteligentes, incluso bombillas conectadas."
-      },
-      {
-        title: "Automatiza el proceso",
-        text: "Activa las actualizaciones automáticas cuando sea posible. Es la forma más sencilla de estar protegido sin preocuparte."
-      },
-      {
-        title: "¡No lo pospongas!",
-        text: "Un día sin actualizar puede ser una oportunidad para los cibercriminales. No lo dejes para mañana."
-      },
-      {
-        title: "Actualiza y protege",
-        text: "Cada actualización es un paso más hacia tu seguridad. ¡Hazlo parte de tu rutina digital! 🔄"
-      }
+      { title: "What is phishing?", text: "Phishing is a type of cyberattack where attackers impersonate legitimate institutions to steal sensitive information." },
+      { title: "Common phishing targets", text: "Emails, fake websites, and social media messages are the most common platforms used for phishing." },
+      { title: "How phishing emails look", text: "They often contain misspellings, urgency, or suspicious links." },
+      { title: "Red flag: urgency", text: "Be cautious when a message insists you act immediately." },
+      { title: "Red flag: too good to be true", text: "Beware of messages promising huge rewards or prizes." },
+      { title: "Interactive question", text: "Which is a sign of phishing?", options: ["Email from IT department", "Message saying 'Urgent: reset your password or be blocked'", "Newsletter from a service you use"], correctIndex: 1 },
+      { title: "Check the sender's address", text: "Always inspect the email address for weird domains or extra characters." },
+      { title: "Interactive question", text: "Which email looks suspicious?", options: ["support@paypal.com", "helpdesk@pàypal-support.com", "noreply@paypal.com"], correctIndex: 1 },
+      { title: "Avoid clicking links directly", text: "Instead of clicking a link in an email, visit the website manually." },
+      { title: "Interactive question", text: "What should you do if a bank email asks for login info?", options: ["Reply with credentials", "Call the bank directly", "Click and login"], correctIndex: 1 },
+      { title: "Look for HTTPS", text: "Secure websites always use HTTPS, not just HTTP." },
+      { title: "Verify with the company", text: "Contact the company directly if you're unsure about an email." },
+      { title: "Avoid email attachments", text: "Never open attachments from unknown or suspicious senders." },
+      { title: "Interactive question", text: "Which is a risky behavior?", options: ["Opening .pdf from your boss", "Opening .exe from unknown sender", "Opening shared doc from colleague"], correctIndex: 1 },
+      { title: "Two-factor authentication (2FA)", text: "2FA adds an extra security layer in case your credentials are stolen." },
+      { title: "Use spam filters", text: "Keep your email filters up to date to reduce phishing exposure." },
+      { title: "Stay informed", text: "Cyber threats evolve—stay updated with security news." },
+      { title: "Interactive question", text: "What's the safest action if you're unsure about an email?", options: ["Ignore or delete it", "Forward to friend", "Click to see"], correctIndex: 0 },
+      { title: "Report phishing", text: "Most services have 'Report Phishing' options—use them." },
+      { title: "You're done!", text: "Great job learning to spot phishing threats. Stay alert and protect yourself." }
     ];
 
     let currentStep = 0;
 
     function showStep(index) {
-      const step = steps[index];
       const card = document.getElementById("stepCard");
-      card.innerHTML = `
-        <h2>${step.title}</h2>
-        <p>${step.text}</p>
-        ${index < steps.length - 1
-          ? '<button onclick="nextStep()">Siguiente</button>'
-          : '<button onclick="location.href=\'minicursos.html\'">Volver al menú</button>'}
-      `;
+      const step = steps[index];
+
+      if (step.options) {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <div class="options">
+            ${step.options.map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`).join('')}
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <button onclick="nextStep()">Next</button>
+        `;
+      }
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        alert('✅ Correct!');
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        alert('❌ Incorrect. Try again.');
+      }
     }
 
     function nextStep() {
       if (currentStep < steps.length - 1) {
         currentStep++;
         showStep(currentStep);
+      } else {
+        location.href = 'minicursos.html';
       }
     }
 
-    // Iniciar
     showStep(currentStep);
   </script>
 </body>
