@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minicourse 6 | CiberDomestika</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .options button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 80%;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minicourse 6: Insider Threats</h1>
+  </header>
+
+  <main>
+    <div class="card" id="stepCard">
+      <!-- Dynamic content -->
+    </div>
+  </main>
+
+  <footer>
+    © 2025 CiberDomestika
+  </footer>
+
+  <script>
+    const steps = [
+      { title: "What is an Insider Threat?", text: "An insider threat comes from someone within the organization who may misuse access to harm the company." },
+      { title: "Types of Insider Threats", text: "Malicious, negligent, and infiltrators are the most common types." },
+      { title: "Example: Malicious Insider", text: "An employee steals sensitive data to sell it." },
+      { title: "Interactive question", text: "Which of these is a sign of a malicious insider?", options: ["Asking too many questions", "Accessing files unrelated to their role", "Taking long breaks"], correctIndex: 1 },
+      { title: "Example: Negligent Insider", text: "An employee accidentally shares a confidential file with the wrong recipient." },
+      { title: "Access Management", text: "Give users the least amount of access necessary to do their job." },
+      { title: "Interactive question", text: "What is a best practice for access control?", options: ["Give full access to managers", "Use least privilege principle", "Allow read-only for everyone"], correctIndex: 1 },
+      { title: "Monitoring Tools", text: "Use software to detect unusual activities and alert IT teams." },
+      { title: "Security Culture", text: "Promote awareness, accountability, and ethical behavior." },
+      { title: "Interactive question", text: "How can a strong culture help?", options: ["By reducing risks", "By increasing fear", "By limiting freedom"], correctIndex: 0 },
+      { title: "Reporting Suspicious Behavior", text: "Employees should feel safe reporting concerns." },
+      { title: "Interactive question", text: "Where should you report insider threats?", options: ["Your colleague", "Your manager or security team", "Your friend"], correctIndex: 1 },
+      { title: "Training Programs", text: "Educate employees regularly about risks and red flags." },
+      { title: "Case Study: Edward Snowden", text: "He was an insider who exposed classified information from the NSA." },
+      { title: "Impact of Insider Threats", text: "They can cause data breaches, financial loss, and reputational damage." },
+      { title: "Interactive question", text: "Which of these is a possible impact?", options: ["More customers", "Legal consequences", "Better morale"], correctIndex: 1 },
+      { title: "Prevention Strategy", text: "Combine monitoring, training, access controls, and a trust-based culture." },
+      { title: "Signs of Trouble", text: "Watch for repeated policy violations, erratic behavior, and disgruntled attitudes." },
+      { title: "Interactive question", text: "Which behavior is most concerning?", options: ["Arriving late", "Complaining occasionally", "Accessing restricted files without cause"], correctIndex: 2 },
+      { title: "Great job!", text: "You've finished the Insider Threats minicourse. Stay alert and help protect your workplace." }
+    ];
+
+    let currentStep = 0;
+
+    function showStep(index) {
+      const card = document.getElementById("stepCard");
+      const step = steps[index];
+
+      if (step.options) {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <div class="options">
+            ${step.options.map((opt, i) => `<button onclick="checkAnswer(${i}, ${step.correctIndex})">${opt}</button>`).join('')}
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <h2>${step.title}</h2>
+          <p>${step.text}</p>
+          <button onclick="nextStep()">Next</button>
+        `;
+      }
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        alert('✅ Correct!');
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        alert('❌ Incorrect. Try again.');
+      }
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        location.href = 'minicursos.html';
+      }
+    }
+
+    showStep(currentStep);
+  </script>
+</body>
+</html>
